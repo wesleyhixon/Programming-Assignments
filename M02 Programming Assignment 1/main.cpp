@@ -5,6 +5,11 @@
 
 using namespace std;
 
+/* Program name: Gradebook
+* Author: Wesley Hixon
+* Date last updated: 06/11/24
+* Purpose: Read data from a file and output into a correctly formatted table
+*/
 
 int main()
 {
