@@ -8,10 +8,12 @@ using namespace std;
 
 int main()
 {
+    // declaring gradeBook file stream
     ifstream gradeBook;
+    // opening gradebook.txt
     gradeBook.open("gradebook.txt");
-    int i = 0;
-    // table heading output
+    
+    // outputting table heading
     cout << left;
     cout << setfill('-') << setw(17) << "+-" << setw(32) << "+-" << setw(12) << "+-" << setw(12) << "+-" << "+" << endl;
     cout << setfill(' ');
@@ -20,18 +22,30 @@ int main()
     cout << setfill(' ');
 
     while(gradeBook.is_open()){
-        string studentFirst, studentLast, studentGrade, studentName;
-        int studentNum;
-        double studentPercent;
+        // reading gradeBook line by line
+        string line;
+        while(getline(gradeBook, line)){
 
-        gradeBook >> studentNum >> studentFirst >> studentLast >> studentPercent >> studentGrade;
+            // declaring variables to extract data from gradeBook
+            string studentFirst, studentLast, studentGrade, studentName;
+            int studentNum;
+            double studentPercent;
+            
+            // converting line into a stringstream s
+            stringstream s(line);
 
-        studentName = studentFirst + " " + studentLast;
-        studentPercent = studentPercent * 100;
+            // extracting data
+            s >> studentNum >> studentFirst >> studentLast >> studentPercent >> studentGrade;
 
-        cout << "| " << setw(15) << studentNum << "| " << setw(30) << studentName << "| " 
-         << setprecision(5) << studentPercent << setw(4) << "%" << "| " << setw(10) << studentGrade << "|" << endl;
-        cout << setfill('-') << setw(17) << "+-" << setw(32) << "+-" << setw(12) << "+-" << setw(12) << "+-" << "+" << endl;
+            // manipulating data for proper formatting
+            studentName = studentFirst + " " + studentLast;
+            studentPercent = studentPercent * 100;
+
+            // outputting data
+            cout << setfill(' ') << "| " << setw(15) << studentNum << "| " << setw(30) << studentName << "| " 
+             << setprecision(5) << right << setw(8) << studentPercent << "%" << left << " | " << setw(10) << studentGrade << "|" << endl;
+            cout << setfill('-') << setw(17) << "+-" << setw(32) << "+-" << setw(12) << "+-" << setw(12) << "+-" << "+" << endl;
+        }
         
         gradeBook.close();
     }
