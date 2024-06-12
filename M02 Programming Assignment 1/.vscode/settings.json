@@ -1,6 +1,10 @@
 {
     "files.associations": {
         "iomanip": "cpp"
+<<<<<<< HEAD
     },
     "C_Cpp.default.compilerPath": "/usr/bin/g++"
+=======
+    }
+>>>>>>> a182920ca5b424540e3b603543c567ad67956e0c
 }
