@@ -75,7 +75,7 @@ int main()
 
     // Prompt User for next 5 calendar events
     cout << "This program will prompt you for your next 5 calendar events \n";
-    cout << "These events will be put into a table, along with a reminder eventDate \n";
+    cout << "These events will be put into a table, along with a reminder date \n";
 
     // Calling function to prompt for 5 calendar events
     getEvent("first", outputFile);
