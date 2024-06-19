@@ -81,7 +81,7 @@ int main(){
         }
     }
     // Output haunting score
-    cout << "The haunting score for this place is " << hauntingScore << "\n";
+    cout << "The haunting score for this place is " << hauntingScore << ". \n";
 
     // Depending on the haunting score, output whether the place is haunted
     if(hauntingScore > 15){
