@@ -1,3 +1,11 @@
+/*
+Program Name: Ghost Hunting
+Author: Wesley Hixon
+Date Last Updated: 06/19/2024
+Purpose: Analyze an input file for ghost events and determine whether a place is haunted
+*/
+
+
 #include <iostream>
 #include <fstream>
 #include <string>
