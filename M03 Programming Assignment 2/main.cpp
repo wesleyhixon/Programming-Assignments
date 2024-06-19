@@ -96,7 +96,7 @@ int main(){
         cout << "This place is haunted. \n";
     }
     else{
-        cout << "This place is probably not haunted.";
+        cout << "This place is probably not haunted.\n";
     }
 
     ghosts.close();
