@@ -10,6 +10,7 @@ Purpose: Analyze an input file for ghost events and determine whether a place is
 #include <fstream>
 #include <string>
 #include <iomanip>
+#include <sstream>
 
 
 using namespace std;
@@ -36,7 +37,7 @@ int main(){
         // Also declaring eventCode to use in switch
         char eventCode;
         
-        stringstream s(line);
+        std:stringstream s(line);
         s >> eventCode;
 
         // Each switch case is a character symbolizing each ghost hunting event
