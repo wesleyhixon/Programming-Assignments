@@ -40,7 +40,7 @@ int main(){
             thirdBestScore = secondBestScore;
             secondBestScore = bestScore;
             bestScore = userScore;
-
+            // remember to add the winners
 
         }
         else if(userScore < bestScore && userScore >= secondBestScore){
