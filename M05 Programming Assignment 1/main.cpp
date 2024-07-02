@@ -96,10 +96,9 @@ int main()
         cout << setw(15) << time << setw(15) << speed << endl;
         
         // This handles the case when totalAccelerationTime is not divisible by 3
-        // When totalAccelerationTime - time is < 3 AND totalAccelerationTime is not divisible by 3
-        // AND time does not equal totalAccelerationTime
+        // When totalAccelerationTime - time is < 3 AND time does not equal totalAccelerationTime
         // Then, add the remaining difference to time
-        if (totalAccelerationTime - time < 3 && totalAccelerationTime % 3 != 0 && totalAccelerationTime != time){
+        if (totalAccelerationTime - time < 3 && totalAccelerationTime != time){
             time += (totalAccelerationTime - time);
         }
         // Otherwise, simply increment time by 3
