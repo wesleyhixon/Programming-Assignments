@@ -6,7 +6,7 @@ using namespace std;
 Program Name: Acceleration
 Author: Wesley Hixon
 Date Last Updated: 07/02/2024
-Purpose: Given a button force and accleration time, output a table of acceleration over time.
+Purpose: Given a button force and acceleration time, output a table of acceleration over time.
 */
 
 // This function calculates speed given acceleration and time
