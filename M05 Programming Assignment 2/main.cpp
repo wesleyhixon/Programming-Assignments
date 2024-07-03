@@ -6,6 +6,13 @@
 
 using namespace std;
 
+/*
+Program Name: Volume and Mass
+Author: Wesley Hixon
+Date Last Updated: 07/03/2024
+Purpose: Convert ingredient weight or volume to volume or weight.
+*/
+
 // Declaring ingredientDensities map so that it's global
 map<string, double> ingredientDensities;
 
