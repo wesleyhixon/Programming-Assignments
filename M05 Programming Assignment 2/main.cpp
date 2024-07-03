@@ -72,12 +72,12 @@ char weightOrVolume(){
             return 'v';
         }
         else if(!cin){
-            cout << "Try again.";
+            cout << "Try again." << endl;
             cin.clear();
             cin.ignore(10000, '\n');
         }
         else{
-            cout << "Try again.";
+            cout << "Try again." << endl;
         }
     }
     return '0';
