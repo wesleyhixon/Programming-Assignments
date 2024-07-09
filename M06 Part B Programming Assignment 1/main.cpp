@@ -146,16 +146,6 @@ void readExistingOrder(){ // This function prompts for a last name, finds the or
         customerFile.close();
         return;
     }
-    /*
-    for(int i = 0; i < 10; i++){ // Search the array for the customer's name
-        if(customerNames[i] == lastName){
-            found = true;
-            foundCustomerIndex = i; // If found, store the index of the customer we just found
-            break;
-        }
-    }
-    */
-    return;
 }
 
 bool continuePrompt(){
