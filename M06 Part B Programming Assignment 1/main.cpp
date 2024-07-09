@@ -7,89 +7,96 @@ using namespace std;
 Program Name: Custom Cars Continued
 Author: Wesley Hixon
 Date Last Updated: 07/08/2024
-Purpose:
+Purpose: Program which can generate customer orders for car part colors.
+Functionality added to input up to 10 customers, find a previous order, and output all orders to file
 */
 
 
 // Declaring my enum with every color
 enum carColorType{SUNSET, CHERRY, PHANTOM, TITANIUM, GEAUX, LIGHTNING, FOREST, MIDNIGHT, PASSION, ROOT, STORM, OCEAN, GLACIAL};
+
 string customerNames[10]; // String array containing customer last names
+
 carColorType partColors[10][3]; // enum array containing 3 part colors for every customer 
+
 int customerIndex = 0; // Customer index to keep track of which customer we're on
 
 // Declaring my function prototypes before main()
-carColorType getColor(string part);
-string printColor(carColorType color);
-void addNewOrder();
-int menu();
-bool continuePrompt();
-void quit(int totalCustomers);
-void findOrder();
+
+carColorType getColor(string part); // Returns a color after prompting user
+string printColor(carColorType color); // Returns a color string given a carColorType color
+void addNewOrder(); // Add a new order
+int menu(); // Display menu and return a menu choice
+bool continuePrompt(); // Asks if user would like to continue
+void quit(int totalCustomers); // Saves all orders in personalized files and quits
+void readExistingOrder(); // Prompts user for a name and finds the order
 
 int main(){
-    // Prompt for colors for body, top and trim.
-    // Then output the colors the user has chosen.
-    // Ask if they'd like to continue with their order
-    // If yes, output the colors to a .txt file
-    char userInput;
     int menuChoice;
-    bool continuing = true;
+    bool running = true;
 
     cout << "Welcome to the car customizer!" << endl; // Welcoming my wonderful user
-    while(continuing){
+    while(running){
         menuChoice = menu(); // Get menu choice
 
         switch(menuChoice){
             case 1:
                 // Find existing order
-                findOrder();
+                readExistingOrder();
                 break;
             case 2:
                 // Add new order
+                if(customerIndex == 10){ // 10 is maximum amount of orders
+                    cout << "You have entered the maximum number of orders, the program will now save all orders and quit." << endl;
+                    quit(customerIndex);
+                    break;
+                }
                 addNewOrder();
                 break;
             case 3:
-                // Quit
+                // Save and quit
                 quit(customerIndex);
-                continuing = false;
+                running = false;
                 break;
         }
-
-        if(continuing && customerIndex == 10){ // 10 is maximum amount of orders
-            cout << "You have entered the maximum number of orders, the program will now save all orders and quit." << endl;
-            quit(customerIndex);
-            break;
-        }
-        else if(continuing){
-            continuing = continuePrompt();
-        }
-    }
+        running = continuePrompt();
+    } // End of loop
     return 0;
 }
 
-void quit(int totalCustomers){
+void quit(int totalCustomers){ // This module saves every customer order before quitting
     
-    customerIndex = 0;
-    cout << "Thank you for using the car customizer. The orders will be saved in files named [customerLastName].txt" << endl;
-    for(int i = 0; i <= totalCustomers; i++){
+    cout << "Thank you for using the car customizer. New orders will be saved in files named [customerLastName].txt" << endl;
+    if(totalCustomers == 0){ // In case of no customers, just quit.
+        return;
+    }
+    for(int customerIndex = 0; customerIndex < totalCustomers; customerIndex++){
+        string fileName = customerNames[customerIndex] + ".txt";
         ofstream outputFile;
-        outputFile.open(customerNames[customerIndex] + ".txt");
+        // Outputting status
+        cout << "Saving " << fileName << "..." << endl;
+        outputFile.open(fileName); // Creating file based on customer name
         
+        // Getting part colors for each part
         carColorType topColor = partColors[customerIndex][0];
         carColorType bodyColor = partColors[customerIndex][1];
         carColorType trimColor = partColors[customerIndex][2];
 
+        // Saving each color code
         outputFile << topColor << endl;
         outputFile << bodyColor << endl;
         outputFile << trimColor << endl;
 
+        // Closing the file
         outputFile.close();
+
     }
+    return;
 }
 
-void findOrder(){ // This function prompts for a last name and reads the order associated with that name
+void readExistingOrder(){ // This function prompts for a last name, finds the order file associated with the name, and reads the contents
     string lastName;
-    cout << "Enter the customer last name for the order" << endl;
+    cout << "Enter the customer last name for the order" << endl; // Prompting user
     
     bool valid = false;
     while(!valid){ // Getting valid last name input
@@ -104,8 +111,42 @@ void findOrder(){ // This function prompts for a last name and reads the order a
         }
     }
 
-    bool found = false;
     int foundCustomerIndex = 0;
+    ifstream customerFile;
+    string fileName = lastName + ".txt";
+
+    customerFile.open(fileName);// Opening file
+
+    if(customerFile.fail()){// In case file wasn't found
+        cout << "Customer file for " << lastName << " was not found." << endl;
+        customerFile.clear();
+        customerFile.close();
+        return;
+    }
+    else{
+        cout << "Here is the order for " << lastName << endl;
+        string line;
+        int partType = 0;
+        while(getline(customerFile, line)){
+            
+            int partNum = stoi(line);
+            carColorType part = static_cast<carColorType>(partNum);
+            switch(partType){
+                case 0:
+                    cout << "Top color: " << printColor(part) << endl;
+                    break;
+                case 1:
+                    cout << "Body color: " << printColor(part) << endl;
+                    break;
+                case 2:
+                    cout << "Trim color: " << printColor(part) << endl;
+            }
+            partType++;
+        }
+        customerFile.close();
+        return;
+    }
+    /*
     for(int i = 0; i < 10; i++){ // Search the array for the customer's name
         if(customerNames[i] == lastName){
             found = true;
@@ -113,19 +154,7 @@ void findOrder(){ // This function prompts for a last name and reads the order a
             break;
         }
     }
-    if(found == true){
-        carColorType topColor = partColors[foundCustomerIndex][0];
-        carColorType bodyColor = partColors[foundCustomerIndex][1];
-        carColorType trimColor = partColors[foundCustomerIndex][2];
-
-        cout << "Here is the order for " << customerNames[foundCustomerIndex] << endl;
-        cout << "Top color: " << printColor(topColor) << endl;
-        cout << "Body color: " << printColor(bodyColor) << endl;
-        cout << "Trim color: " << printColor(trimColor) << endl;
-    }
-    else{
-        cout << "The order for " << lastName << " was not found." << endl;
-    }
+    */
     return;
 }
 
@@ -136,6 +165,7 @@ bool continuePrompt(){
     bool valid = false;
     while(!valid){
         cin >> userInput;
+
         if(userInput == 'Y' || userInput == 'y'){
             return true; // If yes, return true
         }
@@ -145,7 +175,6 @@ bool continuePrompt(){
             cin.ignore(10000, '\n');
         }
         else if(userInput == 'N' || userInput == 'n'){ // Otherwise, exit and return false
-            valid = true;
             quit(customerIndex);
             return false;
         }
@@ -153,14 +182,15 @@ bool continuePrompt(){
             cout << "Please enter Y or N: " << endl;
         }
     }
+    return 0;
 }
 
-int menu(){
+int menu(){ // Menu function, outputs menu and gets input
     int userInput;
     cout << "Please choose an option from the menu:" << endl // Output menu
     << "1. Read Existing Order" << endl
     << "2. Add New Order" << endl
-    << "3. Quit" << endl;
+    << "3. Save & Quit" << endl;
 
     bool valid = false;
     while(!valid){ // Validate input
@@ -181,19 +211,22 @@ int menu(){
 }
 
 
-void addNewOrder(){
+void addNewOrder(){ // This function adds a new order by getting last name, part colors, and then incrementing customerIndex
+    
     carColorType bodyColor, topColor, trimColor;
     string lastName;
+
     bodyColor = partColors[customerIndex][0];
     topColor = partColors[customerIndex][1];
     trimColor = partColors[customerIndex][2];
+
     cout << "Enter the customer last name for the order: ";
     
     bool valid = false; // Getting valid user input
     while(!valid){
         cin >> lastName;
         if(!cin){
-            cout << "Please enter a valid last name.";
+            cout << endl << "Please enter a valid last name.";
             cin.clear();
             cin.ignore(10000, '\n');
         }
@@ -214,7 +247,7 @@ void addNewOrder(){
     cout << "You have chosen " << printColor(bodyColor) << " for the body, " // Outputting what the user input
     << printColor(topColor) << " for the top, and " << printColor(trimColor) << " for the trim." << endl;
     
-    // Move on to the next customer
+    // Increment customerIndex to move on to next customer
     customerIndex += 1;
 }
 
