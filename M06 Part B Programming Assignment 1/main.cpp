@@ -123,15 +123,20 @@ void readExistingOrder(){ // This function prompts for a last name, finds the or
         customerFile.close();
         return;
     }
-    else{
+    else{ // If file is found,
+
         cout << "Here is the order for " << lastName << endl;
+
         string line;
         int partType = 0;
-        while(getline(customerFile, line)){
+
+        while(getline(customerFile, line)){ // Read file line by line
             
-            int partNum = stoi(line);
-            carColorType part = static_cast<carColorType>(partNum);
-            switch(partType){
+            int partNum = stoi(line); // Convert the string to an int
+
+            carColorType part = static_cast<carColorType>(partNum); // Static cast the int to a carColorType
+
+            switch(partType){ // Print the part color
                 case 0:
                     cout << "Top color: " << printColor(part) << endl;
                     break;
@@ -141,9 +146,11 @@ void readExistingOrder(){ // This function prompts for a last name, finds the or
                 case 2:
                     cout << "Trim color: " << printColor(part) << endl;
             }
-            partType++;
+
+            partType++; // Iterate the part type
         }
-        customerFile.close();
+
+        customerFile.close(); // Once finished, close the file
         return;
     }
 }
