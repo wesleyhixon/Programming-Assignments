@@ -18,14 +18,13 @@ carColorType partColors[10][3]; // enum array containing 3 part colors for every
 int customerIndex = 0; // Customer index to keep track of which customer we're on
 
 // Declaring my function prototypes before main()
-void outputToFile(carColorType bodyColor, carColorType topColor, carColorType trimColor);
 carColorType getColor(string part);
 string printColor(carColorType color);
 void addNewOrder();
 int menu();
 bool continuePrompt();
-void quit();
-void readOrder();
+void quit(int totalCustomers);
+void findOrder();
 
 int main(){
     // Prompt for colors for body, top and trim.
@@ -42,8 +41,8 @@ int main(){
 
         switch(menuChoice){
             case 1:
-                // Read existing Order
-                readOrder();
+                // Find existing order
+                findOrder();
                 break;
             case 2:
                 // Add new order
@@ -51,26 +50,49 @@ int main(){
                 break;
             case 3:
                 // Quit
-                quit();
+                quit(customerIndex);
                 continuing = false;
                 break;
         }
 
-        continuing = continuePrompt();
+        if(continuing && customerIndex == 10){ // 10 is maximum amount of orders
+            cout << "You have entered the maximum number of orders, the program will now save all orders and quit." << endl;
+            quit(customerIndex);
+            break;
+        }
+        else if(continuing){
+            continuing = continuePrompt();
+        }
     }
     return 0;
 }
 
-void quit(){
+void quit(int totalCustomers){
+    
+    customerIndex = 0;
+    cout << "Thank you for using the car customizer. The orders will be saved in files named [customerLastName].txt" << endl;
+    for(int i = 0; i <= totalCustomers; i++){
+        ofstream outputFile;
+        outputFile.open(customerNames[customerIndex] + ".txt");
+        
+        carColorType topColor = partColors[customerIndex][0];
+        carColorType bodyColor = partColors[customerIndex][1];
+        carColorType trimColor = partColors[customerIndex][2];
 
+        outputFile << topColor << endl;
+        outputFile << bodyColor << endl;
+        outputFile << trimColor << endl;
+
+        outputFile.close();
+    }
 }
 
-void readOrder(){ // This function prompts for a last name and reads the order associated with that name
+void findOrder(){ // This function prompts for a last name and reads the order associated with that name
     string lastName;
     cout << "Enter the customer last name for the order" << endl;
     
     bool valid = false;
-    while(not valid){ // Getting valid last name input
+    while(!valid){ // Getting valid last name input
         cin >> lastName;
         if(!cin){
             cout << "Please enter a valid input." << endl;
@@ -83,20 +105,20 @@ void readOrder(){ // This function prompts for a last name and reads the order a
     }
 
     bool found = false;
-    int readCustomerIndex = 0;
+    int foundCustomerIndex = 0;
     for(int i = 0; i < 10; i++){ // Search the array for the customer's name
         if(customerNames[i] == lastName){
             found = true;
-            readCustomerIndex = i; // If found, store the index of the customer we just found
+            foundCustomerIndex = i; // If found, store the index of the customer we just found
             break;
         }
     }
     if(found == true){
-        carColorType topColor = partColors[readCustomerIndex][0];
-        carColorType bodyColor = partColors[readCustomerIndex][1];
-        carColorType trimColor = partColors[readCustomerIndex][2];
+        carColorType topColor = partColors[foundCustomerIndex][0];
+        carColorType bodyColor = partColors[foundCustomerIndex][1];
+        carColorType trimColor = partColors[foundCustomerIndex][2];
 
-        cout << "Here is the order for " << customerNames[readCustomerIndex] << endl;
+        cout << "Here is the order for " << customerNames[foundCustomerIndex] << endl;
         cout << "Top color: " << printColor(topColor) << endl;
         cout << "Body color: " << printColor(bodyColor) << endl;
         cout << "Trim color: " << printColor(trimColor) << endl;
@@ -112,7 +134,7 @@ bool continuePrompt(){
     cout << "Would you like to continue with your order? Type Y or N: " << endl; // Asking if the user would like to continue ordering
     
     bool valid = false;
-    while(not valid){
+    while(!valid){
         cin >> userInput;
         if(userInput == 'Y' || userInput == 'y'){
             return true; // If yes, return true
@@ -122,27 +144,28 @@ bool continuePrompt(){
             cin.clear();
             cin.ignore(10000, '\n');
         }
-        else if(userInput == 'N' || userInput == 'n'){ // Otherwise, simply exit
+        else if(userInput == 'N' || userInput == 'n'){ // Otherwise, exit and return false
             valid = true;
+            quit(customerIndex);
+            return false;
         }
         else{
             cout << "Please enter Y or N: " << endl;
         }
     }
-    return false; // Otherwise, return false
 }
 
 int menu(){
     int userInput;
-    cout << "Please choose an option from the menu:" << endl
+    cout << "Please choose an option from the menu:" << endl // Output menu
     << "1. Read Existing Order" << endl
     << "2. Add New Order" << endl
     << "3. Quit" << endl;
 
     bool valid = false;
-    while(not valid){
+    while(!valid){ // Validate input
         cin >> userInput;
-        if(userInput >= 1 && userInput <= 3){
+        if(userInput >= 1 && userInput <= 3){ // If input valid, break loop and return input
             valid = true;
         }
         else if(!cin){
@@ -167,7 +190,7 @@ void addNewOrder(){
     cout << "Enter the customer last name for the order: ";
     
     bool valid = false; // Getting valid user input
-    while(not valid){
+    while(!valid){
         cin >> lastName;
         if(!cin){
             cout << "Please enter a valid last name.";
@@ -183,26 +206,16 @@ void addNewOrder(){
     bodyColor = getColor("body"); // Getting orders for each car part
     topColor = getColor("top");
     trimColor = getColor("trim");
+
+    partColors[customerIndex][0] = bodyColor;
+    partColors[customerIndex][1] = topColor;
+    partColors[customerIndex][2] = trimColor;
     
     cout << "You have chosen " << printColor(bodyColor) << " for the body, " // Outputting what the user input
     << printColor(topColor) << " for the top, and " << printColor(trimColor) << " for the trim." << endl;
     
     // Move on to the next customer
     customerIndex += 1;
-}
-
-
-void outputToFile(carColorType bodyColor, carColorType topColor, carColorType trimColor){
-    // Input is the body, top, and trim color enums, output is a file with each line containing the number corresponding to the color
-    ofstream outputFile;
-    outputFile.open("order.txt");
-
-    outputFile << bodyColor << endl;
-    outputFile << topColor << endl;
-    outputFile << trimColor << endl;
-
-    outputFile.close();
-    return;
 }
 
 
@@ -227,7 +240,7 @@ carColorType getColor(string part){
     cout << "13. Glacial White" << endl;
 
     bool valid = false; // Verifying user input
-    while(not valid){
+    while(!valid){
         cin >> userInput;
         if(userInput > 0 && userInput <= 13){
             valid = true;
@@ -304,29 +317,29 @@ string printColor(carColorType color){
         case GEAUX:
             return "Geaux Gold";
             break;
-    case LIGHTNING:
-        return "Lightning Yellow";
-        break;
-    case FOREST:
-        return "Forest Green";
-        break;
-    case MIDNIGHT:
-        return "Midnight Blue";
-        break;
-    case PASSION:
-        return "Passion Purple";
-        break;
-    case ROOT:
-        return "Root Beer";
-        break;
-    case STORM:
-        return "Storm Surge";
-        break;
-    case OCEAN:
-        return "Ocean's Rip";
-        break;
-    case GLACIAL:
-        return "Glacial White";
-        break;
+        case LIGHTNING:
+            return "Lightning Yellow";
+            break;
+        case FOREST:
+            return "Forest Green";
+            break;
+        case MIDNIGHT:
+            return "Midnight Blue";
+            break;
+        case PASSION:
+            return "Passion Purple";
+            break;
+        case ROOT:
+            return "Root Beer";
+            break;
+        case STORM:
+            return "Storm Surge";
+            break;
+        case OCEAN:
+            return "Ocean's Rip";
+            break;
+        case GLACIAL:
+            return "Glacial White";
+            break;
 }
 }
