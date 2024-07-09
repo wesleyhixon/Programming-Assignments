@@ -59,7 +59,9 @@ int main(){
                 running = false;
                 break;
         }
+        if(running){
         running = continuePrompt();
+        }
     } // End of loop
     return 0;
 }
