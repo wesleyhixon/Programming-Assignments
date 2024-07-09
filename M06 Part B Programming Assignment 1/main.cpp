@@ -1,51 +1,123 @@
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 
 using namespace std;
 /*
-Program Name: Custom Cars
+Program Name: Custom Cars Continued
 Author: Wesley Hixon
 Date Last Updated: 07/08/2024
-Purpose: Get a custom car order using enum datatype
+Purpose:
 */
 
 
 // Declaring my enum with every color
 enum carColorType{SUNSET, CHERRY, PHANTOM, TITANIUM, GEAUX, LIGHTNING, FOREST, MIDNIGHT, PASSION, ROOT, STORM, OCEAN, GLACIAL};
+string customerNames[10]; // String array containing customer last names
+carColorType partColors[10][3]; // enum array containing 3 part colors for every customer 
+int customerIndex = 0; // Customer index to keep track of which customer we're on
 
 // Declaring my function prototypes before main()
 void outputToFile(carColorType bodyColor, carColorType topColor, carColorType trimColor);
 carColorType getColor(string part);
 string printColor(carColorType color);
-
+void addNewOrder();
+int menu();
+bool continuePrompt();
+void quit();
+void readOrder();
 
 int main(){
     // Prompt for colors for body, top and trim.
     // Then output the colors the user has chosen.
     // Ask if they'd like to continue with their order
     // If yes, output the colors to a .txt file
-    carColorType bodyColor, topColor, trimColor;
     char userInput;
+    int menuChoice;
+    bool continuing = true;
 
     cout << "Welcome to the car customizer!" << endl; // Welcoming my wonderful user
+    while(continuing){
+        menuChoice = menu(); // Get menu choice
 
-    bodyColor = getColor("body"); // Getting orders for each car part
-    topColor = getColor("top");
-    trimColor = getColor("trim");
-    
-    cout << "You have chosen " << printColor(bodyColor) << " for the body, " // Outputting what the user input
-    << printColor(topColor) << " for the top, and " << printColor(trimColor) << " for the trim." << endl;
+        switch(menuChoice){
+            case 1:
+                // Read existing Order
+                readOrder();
+                break;
+            case 2:
+                // Add new order
+                addNewOrder();
+                break;
+            case 3:
+                // Quit
+                quit();
+                continuing = false;
+                break;
+        }
 
-    cout << "Would you like to continue with your order? Type Y or N: " << endl; // Asking if the user would like to output to a file
+        continuing = continuePrompt();
+    }
+    return 0;
+}
+
+void quit(){
+
+}
+
+void readOrder(){ // This function prompts for a last name and reads the order associated with that name
+    string lastName;
+    cout << "Enter the customer last name for the order" << endl;
     
     bool valid = false;
-    while(not valid){ // If yes, output colors to a file called order.txt
-        cin >> userInput;
-        if(userInput == 'Y' || userInput == 'y'){
-            outputToFile(bodyColor, topColor, trimColor);
+    while(not valid){ // Getting valid last name input
+        cin >> lastName;
+        if(!cin){
+            cout << "Please enter a valid input." << endl;
+            cin.clear();
+            cin.ignore(10000, '\n');
+        }
+        else{
             valid = true;
         }
-        else if(!cin){
+    }
+
+    bool found = false;
+    int readCustomerIndex = 0;
+    for(int i = 0; i < 10; i++){ // Search the array for the customer's name
+        if(customerNames[i] == lastName){
+            found = true;
+            readCustomerIndex = i; // If found, store the index of the customer we just found
+            break;
+        }
+    }
+    if(found == true){
+        carColorType topColor = partColors[readCustomerIndex][0];
+        carColorType bodyColor = partColors[readCustomerIndex][1];
+        carColorType trimColor = partColors[readCustomerIndex][2];
+
+        cout << "Here is the order for " << customerNames[readCustomerIndex] << endl;
+        cout << "Top color: " << printColor(topColor) << endl;
+        cout << "Body color: " << printColor(bodyColor) << endl;
+        cout << "Trim color: " << printColor(trimColor) << endl;
+    }
+    else{
+        cout << "The order for " << lastName << " was not found." << endl;
+    }
+    return;
+}
+
+bool continuePrompt(){
+    char userInput;
+    cout << "Would you like to continue with your order? Type Y or N: " << endl; // Asking if the user would like to continue ordering
+    
+    bool valid = false;
+    while(not valid){
+        cin >> userInput;
+        if(userInput == 'Y' || userInput == 'y'){
+            return true; // If yes, return true
+        }
+        else if(!cin){ // In case of input failure
             cout << "Please enter Y or N: " << endl;
             cin.clear();
             cin.ignore(10000, '\n');
@@ -57,8 +129,68 @@ int main(){
             cout << "Please enter Y or N: " << endl;
         }
     }
-    return 0;
+    return false; // Otherwise, return false
 }
+
+int menu(){
+    int userInput;
+    cout << "Please choose an option from the menu:" << endl
+    << "1. Read Existing Order" << endl
+    << "2. Add New Order" << endl
+    << "3. Quit" << endl;
+
+    bool valid = false;
+    while(not valid){
+        cin >> userInput;
+        if(userInput >= 1 && userInput <= 3){
+            valid = true;
+        }
+        else if(!cin){
+            cout << "Please enter a number between 1 and 3." << endl;
+            cin.clear();
+            cin.ignore(100000, '\n');
+        }
+        else{
+            cout << "Please enter a number between 1 and 3." << endl;
+        }
+    }
+    return userInput;
+}
+
+
+void addNewOrder(){
+    carColorType bodyColor, topColor, trimColor;
+    string lastName;
+    bodyColor = partColors[customerIndex][0];
+    topColor = partColors[customerIndex][1];
+    trimColor = partColors[customerIndex][2];
+    cout << "Enter the customer last name for the order: ";
+    
+    bool valid = false; // Getting valid user input
+    while(not valid){
+        cin >> lastName;
+        if(!cin){
+            cout << "Please enter a valid last name.";
+            cin.clear();
+            cin.ignore(10000, '\n');
+        }
+        else {
+            customerNames[customerIndex] = lastName;
+            valid = true;
+        }
+    }
+    
+    bodyColor = getColor("body"); // Getting orders for each car part
+    topColor = getColor("top");
+    trimColor = getColor("trim");
+    
+    cout << "You have chosen " << printColor(bodyColor) << " for the body, " // Outputting what the user input
+    << printColor(topColor) << " for the top, and " << printColor(trimColor) << " for the trim." << endl;
+    
+    // Move on to the next customer
+    customerIndex += 1;
+}
+
 
 void outputToFile(carColorType bodyColor, carColorType topColor, carColorType trimColor){
     // Input is the body, top, and trim color enums, output is a file with each line containing the number corresponding to the color
@@ -72,6 +204,7 @@ void outputToFile(carColorType bodyColor, carColorType topColor, carColorType tr
     outputFile.close();
     return;
 }
+
 
 carColorType getColor(string part){
     // This prompts user for the color of a part indicated by parameter
@@ -151,6 +284,7 @@ carColorType getColor(string part){
             break;
     }
 } 
+
 
 string printColor(carColorType color){
 // Switch statement converting carColorType to string
