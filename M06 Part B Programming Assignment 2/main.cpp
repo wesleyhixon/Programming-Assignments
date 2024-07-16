@@ -54,7 +54,7 @@ int main(){
 // This function gets the scores from the .txt and stores them in 2d array scores[][]
 void getScores(double scores[20][5], string fileName, int& numRows){
     ifstream gradesFile;
-    gradesFile.open("grades.txt");
+    gradesFile.open(fileName);
 
     string line;
     for(int row = 0; row < 20; row++ ){                         // For each row,
