@@ -1,0 +1,20 @@
+Customer: Peter Parker
+112 Main St.
+Queens, NY 11415
+
+Products Ordered: 
+Pendant - Medium $17.10 48.00g
+Ornament - Medium $33.52 101.00g
+Spider - Medium $32.54 89.00g
+Lizard - Medium $34.26 112.00g
+Turtle - Medium $42.12 125.00g
+Tree - Large $67.72 132.00g
+Tray - Large $60.88 143.00g
+Coaster - Medium $13.00 43.00g
+Seahorse - Large $33.52 111.00g
+Rose - Small $18.65 44.00g
+
+Subtotal: $353.31
+Total Weight: 948.00g
+Shipping Cost: $19.39
+Total Cost: $372.70
