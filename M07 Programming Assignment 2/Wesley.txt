@@ -1,0 +1,13 @@
+Customer: Wesley Hixon
+1234 Oak Avenue
+Zionsville, IN 46075
+
+Products Ordered:
+Heart - Small $26.68 22.00g
+Tree - Large $67.72 132.00g
+Dragon - Large $108.76 200.00g
+
+Subtotal: $203.16
+Total Weight: 354.00g
+Shipping Cost: $7.24
+Total Cost: $210.40
