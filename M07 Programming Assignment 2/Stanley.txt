@@ -1,0 +1,12 @@
+Customer: Stanley Yelnats
+123 Holes Ave.
+Camp Green Lake, Texas 12345
+
+Products Ordered:
+Pendant - Medium $17.10 48.00g
+Ornament - Medium $33.52 101.00g
+
+Subtotal: $50.62
+Total Weight: 149.00g
+Shipping Cost: $3.05
+Total Cost: $53.67

@@ -1,0 +1,11 @@
+Customer: Barack Obama
+1600 Pennsylvania Avenue NW
+Washington, DC 20500
+
+Products Ordered:
+Rose - Small $18.65 44.00g
+
+Subtotal: $18.65
+Total Weight: 44.00g
+Shipping Cost: $0.90
+Total Cost: $19.55
