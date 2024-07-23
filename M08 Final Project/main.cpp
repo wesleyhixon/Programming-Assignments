@@ -1,12 +1,12 @@
 #include <iostream>
 #include <math.h>
-#include <PPlot.cpp>
-#include <PPlot.h>
-#include <SVGPainter.cpp>
-#include <SVGPainter.h>
+//#include <PPlot.cpp>
+//#include <PPlot.h>
+//#include <SVGPainter.cpp>
+//#include <SVGPainter.h>
 
 using namespace std;
-using namespace SVGChart;
+//using namespace SVGChart;
 
 /*
 Name: System of Linear Equations
@@ -27,7 +27,7 @@ const int xCoefficient = 0;
 const int yCoefficient = 1;
 const int zCoefficient = 2;
 
-PPlot myPlot;
+//PPlot myPlot;
 
 int main(){
     
@@ -145,6 +145,7 @@ double validateInput(string prompt){
             return input;
         }
     }
+    return input;
 }
 
 
