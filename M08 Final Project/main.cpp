@@ -1,7 +1,12 @@
 #include <iostream>
 #include <math.h>
+#include <PPlot.cpp>
+#include <PPlot.h>
+#include <SVGPainter.cpp>
+#include <SVGPainter.h>
 
 using namespace std;
+using namespace SVGChart;
 
 /*
 Name: System of Linear Equations
@@ -22,6 +27,7 @@ const int xCoefficient = 0;
 const int yCoefficient = 1;
 const int zCoefficient = 2;
 
+PPlot myPlot;
 
 int main(){
     
@@ -54,13 +60,19 @@ int solveSystem(double equation1[], double equation2[]){
         return 1;                                       // If the slopes are opposite reciporicals, the lines are perpendicular
     }
     else if(slope1 == slope2){
+        if(equation1[zCoefficient] == equation2[zCoefficient]){
+            cout << "The lines are the same";
+            return 2;
+        }
+        else{
         cout << "The lines are parallel" << endl;       // If the slopes are the same, the lines are parallel
         return 2;
+        }
     }
     
     
-    if(equation1[xCoefficient] < equation2[xCoefficient]){
-        factorToMultiply = equation2[xCoefficient] / equation1[xCoefficient];
+    if(equation1[xCoefficient] < equation2[xCoefficient]){                      // Determining which X-Coefficient is smaller
+        factorToMultiply = equation2[xCoefficient] / equation1[xCoefficient];   // That is the coefficient we will multiply and add
 
         copyEquation(equation1, equation3);
         x1Smaller = true;
@@ -72,11 +84,12 @@ int solveSystem(double equation1[], double equation2[]){
         x1Smaller = false;
     }
 
-    if(equation1[xCoefficient] > 0 && equation2[xCoefficient] > 0 || equation1[xCoefficient] < 0 && equation2[xCoefficient] < 0){
-        factorToMultiply *= -1;                                               // If both x coefficients are positive or negative, invert the factor so the x coefficients cancel out
+    if(equation1[xCoefficient] > 0 && equation2[xCoefficient] > 0 
+    || equation1[xCoefficient] < 0 && equation2[xCoefficient] < 0){
+        factorToMultiply *= -1;                                                 // If both x coefficients are positive or negative, invert the factor so the x coefficients cancel out
     }
 
-    multiplyEquation(equation3, factorToMultiply);                            // Multiplying the copied equation 
+    multiplyEquation(equation3, factorToMultiply);                              // Multiplying the copied equation to make the xCoefficient inverse
 
     if(x1Smaller){                                                              // Adding the equations to create a third equation with no X variable
         addEquations(equation2, equation3, equation3);
@@ -93,8 +106,7 @@ int solveSystem(double equation1[], double equation2[]){
 
     xSolution = equation3[zCoefficient] / equation3[xCoefficient];
 
-    cout << "The X solution is: " << xSolution << endl;
-    cout << "The Y solution is: " << ySolution << endl;
+    cout << "The lines intersect at (" << xSolution << ", " << ySolution << ")";
 
     return 0;
 }
@@ -133,4 +145,9 @@ double validateInput(string prompt){
             return input;
         }
     }
+}
+
+
+void drawPlot(){
+
 }
