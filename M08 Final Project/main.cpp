@@ -1,13 +1,8 @@
 #include <iostream>
-#include <math.h>
-#include "PPlot.cpp"
-#include "PPlot.h"
-#include "SVGPainter.cpp"
-#include "SVGPainter.h"
-#include <koolplot.h>
+
 
 using namespace std;
-using namespace SVGChart;
+
 
 /*
 Name: System of Linear Equations
@@ -28,7 +23,7 @@ const int xCoefficient = 0;     // Const variables to represent the coefficient 
 const int yCoefficient = 1;
 const int zCoefficient = 2;
 
-PPlot myPlot;
+
 
 int main(){
 
@@ -47,6 +42,9 @@ int main(){
     equation2[yCoefficient] = validateInput("Enter B for the second equation: ");
     equation2[zCoefficient] = validateInput("Enter C for the second equation: ");
     
+    cout << "The lines you entered are:" << endl
+    << equation1[xCoefficient] << "x + " << equation1[yCoefficient] << "y = " << equation1[zCoefficient] << endl
+    << equation2[xCoefficient] << "x + " << equation2[yCoefficient] << "y = " << equation2[zCoefficient] << endl;
     // Solving the system
     solveSystem(equation1, equation2);
     
@@ -66,8 +64,7 @@ void solveSystem(double equation1[], double equation2[]){
 
 
     if(slope1 == -(1 / slope2)){
-        cout << "The lines are perpendicular" << endl;
-        return;                                                         // If the slopes are opposite reciporicals, the lines are perpendicular
+        cout << "The lines are perpendicular" << endl;                  // If the slopes are opposite reciporicals, the lines are perpendicular
     }
     else if(slope1 == slope2){
         if(equation1[zCoefficient] == equation2[zCoefficient]){
@@ -170,7 +167,3 @@ double validateInput(string prompt){
     return input;
 }
 
-
-void drawPlot(){
-
-}
