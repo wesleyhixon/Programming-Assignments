@@ -7,6 +7,7 @@
         "xmemory": "cpp",
         "iosfwd": "cpp",
         "xlocmes": "cpp",
-        "istream": "cpp"
+        "istream": "cpp",
+        "set": "cpp"
     }
 }

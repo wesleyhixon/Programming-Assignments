@@ -1,0 +1,13 @@
+Customer: Tony Stark
+200 Park Ave
+New York, NY 10166
+
+Products Ordered: 
+Turtle - Medium $42.12 125.00g
+Sun - Large $74.56 125.00g
+Keychain - Small $25.45 48.00g
+
+Subtotal: $142.13
+Total Weight: 298.00g
+Shipping Cost: $6.10
+Total Cost: $148.23
