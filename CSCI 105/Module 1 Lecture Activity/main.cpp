@@ -9,7 +9,7 @@ Name: Set Operations
 Author: Wesley Hixon
 Date of Last Revision: 8/23/2024
 Purpose: Given 2 user inputted integer sets, perform basic set operations such as:
-intersection, union, difference, and symmetrical difference
+intersection, union, difference, and symmetric difference
 */
 
 
@@ -18,7 +18,7 @@ intersection, union, difference, and symmetrical difference
 set<int> setIntersection(const set<int>& setA, const set<int>& setB);
 set<int> setUnion(const set<int>& setA, const set<int>& setB);
 set<int> setDifference(const set<int>& setA, const set<int>& setB);
-set<int> setSymmetricalDifference(const set<int>& setA, const set<int>& setB);
+set<int> setSymmetricDifference(const set<int>& setA, const set<int>& setB);
 set<int> getIntSet(string setName);
 bool stringIsInt(string str);
 void printSet(const set<int>& inputSet);
@@ -70,10 +70,10 @@ int main(){
     printSet(differenceBA);
     cout << endl;
 
-    set<int> symmetricalDifference = setSymmetricalDifference(setA, setB);  // Getting symmetrical difference
+    set<int> symmetricDifference = setSymmetricDifference(setA, setB);  // Getting symmetric difference
     
-    cout << "Here is the symmetrical difference of setA and setB: ";        // Printing symmetrical difference
-    printSet(symmetricalDifference);
+    cout << "Here is the symmetric difference of setA and setB: ";        // Printing symmetric difference
+    printSet(symmetricDifference);
     cout << endl;
 
     return 0;
@@ -124,16 +124,16 @@ set<int> setDifference(const set<int>& setA, const set<int>& setB){
     return difference;
 }
 
-set<int> setSymmetricalDifference(const set<int>& setA, const set<int>& setB){
-    set<int> symmetricalDifference;
+set<int> setSymmetricDifference(const set<int>& setA, const set<int>& setB){
+    set<int> symmetricDifference;
     set<int> setC, setD;    // For storing output of setDifference
 
     setC = setDifference(setA, setB);   // Getting difference between sets both ways
     setD = setDifference(setB, setA);
 
-    symmetricalDifference = setUnion(setC, setD);   // Combining sets
+    symmetricDifference = setUnion(setC, setD);   // Combining sets
 
-    return symmetricalDifference;
+    return symmetricDifference;
 }
 
 set<int> getIntSet(string setName){
