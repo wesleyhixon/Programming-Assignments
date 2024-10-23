@@ -1,4 +1,7 @@
 #include <iostream>
+#include <iomanip>
+#include <string>
+#include <cctype>
 
 using namespace std;
 
@@ -62,6 +65,8 @@ Cube constructCube();
 // Function to output cube characteristics
 void readCubeInfo(Cube cube);
 
+void validateInt(int& input);
+
 int main(){
     Cube userCube;
 
@@ -80,43 +85,48 @@ Cube constructCube(){
 
     // Length input
     cout << "Please enter the length of your cube: ";
-    while(!(cin >> length)){
-        cout << "Please try again. Enter a valid integer." << endl;
-        cin.clear();
-        cin.ignore(10000, '\n');
-    }
+    validateInt(length);
 
     // Setting length
     newCube.setLength(length);
 
     // Width input
-    cout << "Please enter the width of your cube: " << endl;
-    while(!(cin >> width)){
-        cout << "Please try again. Enter a valid integer.";
-        cin.clear();
-        cin.ignore(10000, '\n');
-    }
+    cout << "Please enter the width of your cube: ";
+    validateInt(width);
+
 
     // Setting width
     newCube.setWidth(width);
 
     // Height input
-    cout << "Please enter the height of your cube: " << endl;
-    while(!(cin >> height)){
-        cout << "Please try again. Enter a valid integer.";
-        cin.clear();
-        cin.ignore(10000, '\n');
-    }
+    cout << "Please enter the height of your cube: ";
+    
+    validateInt(height);
 
     // Setting height
     newCube.setHeight(height);
 
     // Color input
     cout << "Please enter the color of your cube: ";
-    while(!(cin >> color)){
-        cout << "Please try again. Enter a valid integer.";
-        cin.clear();
-        cin.ignore(10000, '\n');
+
+    bool valid = false;
+    while(!valid){
+        cin >> color;
+        if(!cin){
+            cout << "Please try again.";
+            cin.clear();
+            cin.ignore(10000, '\n');
+        }
+        else{
+            for(int i = 0; i < color.length(); i++){
+                if(!isalpha(color[i])){
+                    cout << "Please enter a string without digits.";
+                }
+                else if(i = color.length() && !isalpha(color[i])){
+                    valid = true;
+                }
+            }
+        }
     }
 
     // Setting color
@@ -137,4 +147,12 @@ void readCubeInfo(Cube cube){
     << "The color of your cube is " << cube.getColor() << endl;
     
     return;
+}
+
+void validateInt(int& input){
+    while(!(cin >> input) || input < 0){
+        cout << "Try again. Please enter a valid integer.";
+        cin.clear();
+        cin.ignore(10000, '\n');
+    }
 }
