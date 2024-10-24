@@ -167,7 +167,7 @@ void readCubeInfo(Cube cube){
 
 // Function to prompt for a valid integer input over 0
 void validateInt(int& input){
-    while(!(cin >> input) || input < 0){
+    while(!(cin >> input) || input <= 0){
         cout << "Try again. Please enter a valid integer.";
         cin.clear();
         cin.ignore(10000, '\n');
