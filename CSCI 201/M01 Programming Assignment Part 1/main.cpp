@@ -109,23 +109,34 @@ Cube constructCube(){
     // Color input
     cout << "Please enter the color of your cube: ";
 
+    // Validating color input
     bool valid = false;
+    bool containsNumber = false;
+
     while(!valid){
         cin >> color;
+
+        // In case of input failure
         if(!cin){
             cout << "Please try again.";
             cin.clear();
             cin.ignore(10000, '\n');
         }
+
         else{
+            // Checks every character for numbers
+            containsNumber = false;
             for(int i = 0; i < color.length(); i++){
                 if(!isalpha(color[i])){
-                    cout << "Please enter a string without digits.";
-                }
-                else if(i = color.length() && !isalpha(color[i])){
-                    valid = true;
+                    cout << "Please enter a string without numbers.";
+                    containsNumber = true;
+                    break;
                 }
             }
+        }
+
+        if(!containsNumber){
+            valid = true;
         }
     }
 
