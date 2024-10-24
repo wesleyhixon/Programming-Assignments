@@ -68,15 +68,19 @@ void readCubeInfo(Cube cube);
 void validateInt(int& input);
 
 int main(){
+    // Create new cube
     Cube userCube;
 
+    // Build new cube with constructCube()
     userCube = constructCube();
 
+    // Read back cube info
     readCubeInfo(userCube);
     return 0;
 }
 
 
+// This function asks for input for cube characteristics and returns the final cube
 Cube constructCube(){
     // Initializing variables
     int length, width, height;
@@ -148,6 +152,7 @@ Cube constructCube(){
     return newCube;
 }
 
+// Function to output cube info to console using getter methods
 void readCubeInfo(Cube cube){
 
     cout << endl << "This is your cube info" << endl
@@ -160,6 +165,7 @@ void readCubeInfo(Cube cube){
     return;
 }
 
+// Function to prompt for a valid integer input over 0
 void validateInt(int& input){
     while(!(cin >> input) || input < 0){
         cout << "Try again. Please enter a valid integer.";
