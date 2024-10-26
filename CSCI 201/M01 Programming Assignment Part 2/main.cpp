@@ -5,24 +5,21 @@
 
 using namespace std;
 
-enum radioBand{
-    AM,
-    FM
-};
 
-class StereoReciever{
+class stereoReciever{
     private:
         string manufacturer;
         string model;
         int serialNumber;
         int wattage;
         int numChannels;
-        radioBand band;
-        double frequency;
-        int volume;
-        bool power;
-        int bass;
-        int treble;
+        string band = "AM";
+        double fmFrequency = 100.1;
+        int amFrequency = 1000;
+        int volume = 5;
+        bool power = false;
+        int bass = 0;
+        int treble = 0;
     
     public:
         // Setter Methods
@@ -41,11 +38,19 @@ class StereoReciever{
         void setNumChannels(int numChannelsInput){
             numChannels = numChannelsInput;
         }
-        void setBand(radioBand bandInput){
-            band = bandInput;
+        void changeBand(){
+            if(band == "AM"){
+                band = "FM";
+            }
+            else{
+                band = "AM";
+            }
         }
-        void setFrequency(double frequencyInput){
-            frequency = frequencyInput;
+        void setFMFrequency(double frequencyInput){
+            fmFrequency = frequencyInput;
+        }
+        void setAMFrequency(int frequencyInput){
+            amFrequency = frequencyInput;
         }
         void setVolume(int volumeInput){
             if(volumeInput <= 10 && volumeInput >= 0){
@@ -55,8 +60,13 @@ class StereoReciever{
                 cout << "Invalid Volume!" << endl;
             }
         }
-        void setPower(bool powerInput){
-            power = powerInput;
+        void togglePower(){
+            if(power){
+                power = false;
+            }
+            else{
+                power = true;
+            }
         }
         void setBass(int bassInput){
             if(bassInput <= 5 && bassInput >= -5){
@@ -92,11 +102,14 @@ class StereoReciever{
         int getNumChannels(){
             return numChannels;
         }
-        radioBand getBand(){
+        string getBand(){
             return band;
         }
-        double getFrequency(){
-            return frequency;
+        double getFMFrequency(){
+            return fmFrequency;
+        }
+        int getAMFrequency(){
+            return amFrequency;
         }
         int getVolume(){
             return volume;
@@ -119,18 +132,17 @@ class StereoReciever{
             setWattage(wattageInput);
             setNumChannels(numChannelsInput);
 
-            // Set default values for everything else
-            setBand(FM);
-            setFrequency(100.1);
-            setVolume(5);
-            setPower(false);
-            setTreble(0);
-            setBass(0);
+            // Everything else has a default value
         }
 };
 
+void displayStereo(stereoReciever stereo);
+void changeBand(stereoReciever& stereo);
+bool getBoolInput(string prompt);
+void changeFrequency(stereoReciever& stereo);
+
 int main(){
-    StereoReciever userStereo;
+    stereoReciever userStereo;
 
     cout << "Welcome to the stereo reciever simulation!" << endl
     << "Please create your new stereo reciever." << endl;
@@ -218,15 +230,15 @@ int main(){
     userStereo.stereoConstructor(manufacturer, model, serialNum, wattage, numChannels);
 
     // Turn stereo on
-    userStereo.setPower(true);
+    userStereo.togglePower();
 
     bool menu = true;
     
     while(menu){
 
-        int userChoice;
+        int menuChoice;
 
-        cout << "Input a number between 1 and 4 to select any of the following options:" << endl
+        cout << endl << "Input a number between 1 and 5 to select any of the following options:" << endl
         << "1. View Stereo Attrubutes" << endl
         << "2. Change Band (AM / FM)" << endl
         << "3. Change Radio Frequency" << endl
@@ -236,19 +248,37 @@ int main(){
         valid = false;
 
         while(!valid){
-            if(!(cin >> userChoice) || userChoice < 1 || userChoice > 5){
+            if(!(cin >> menuChoice) || menuChoice < 1 || menuChoice > 5){
                 cout << "Please enter a valid menu choice." << endl;
+                cin.clear();
+                cin.ignore(10000, '\n');
             }
             else{
                 valid = true;
             }
         }
 
-        switch(userChoice){
+        switch(menuChoice){
             case 1:
                 displayStereo(userStereo);
                 break;
             case 2:
+                changeBand(userStereo);
+                break;
+            case 3:
+                // change frequency
+                changeFrequency(userStereo);
+                break;
+            case 4:
+                // change volume
+                break;
+            case 5:
+                bool input = getBoolInput("Are you sure you would like to exit? Type (y/n)");
+                if(input == true){
+                    userStereo.togglePower();
+                    menu = false;
+                }
+                break;
         }
 
     }
@@ -256,26 +286,15 @@ int main(){
     return 0;
 }
 
-void displayStereo(StereoReciever stereo){
+void displayStereo(stereoReciever stereo){
     
-    // Converting stereo band from enum to string for output
-    string band;
-    switch(stereo.getBand()){
-        case 1:
-            band = "AM";
-            break;
-        case 2:
-            band = "FM";
-            break;
-    }
-
-    cout << "This is your current stereo's attributes:" << endl
+    cout << endl << "This is your current stereo's attributes:" << endl
     << "Manufacturer: " << stereo.getManufacturer() << endl
     << "Model: " << stereo.getModel() << endl
     << "Serial Number: " << stereo.getSerialNum() << endl
     << "Wattage: " << stereo.getWattage() << endl
     << "Number of Channels: " << stereo.getNumChannels() << endl
-    << "Current Band:" << band << endl
+    << "Current Band:" << stereo.getBand() << endl
     << "Current Volume: " << stereo.getVolume() << endl
     << "Current Bass Level: " << stereo.getBass() << endl
     << "Current Treble Level: " << stereo.getTreble() << endl;
@@ -283,8 +302,91 @@ void displayStereo(StereoReciever stereo){
     return;
 }
 
+// WIP
+/*
 bool getValidInput(string& input){
     bool valid = false;
     cin >> input;
     
+}
+*/
+
+void changeBand(stereoReciever& stereo){
+    string band = stereo.getBand();
+
+    cout << endl << "The current band is set to " << band << endl;
+
+    bool input = getBoolInput("Would you like to switch bands? (Type y/n)");
+
+    if(input = true){
+        stereo.changeBand();
+    }
+}
+
+bool getBoolInput(string prompt){
+    bool valid = false;
+    char input;
+    
+    cout << endl << prompt;
+    
+    while(!valid){
+        if(!(cin >> input) || (tolower(input) != 'y' && tolower(input) != 'n')){
+            cout << endl << "Please try again. Enter y or n." << endl;
+            cin.clear();
+            cin.ignore(100000, '\n');
+        }
+        else{
+            valid = true;
+        }
+    }
+
+    if(tolower(input) == 'y'){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+void changeFrequency(stereoReciever& stereo){
+    double frequency;
+
+    if(stereo.getBand() == "AM"){
+        frequency = stereo.getAMFrequency();
+    }
+    else{
+        frequency = stereo.getFMFrequency();
+    }
+
+
+    cout << endl << stereo.getBand() << " radio frequency is currently set to " << frequency << endl;
+    
+    bool input = getBoolInput("Would you like to change it? (Type y/n)");
+
+    if(input == false){
+        return;
+    }
+
+    bool valid = false;
+    double frequencyInput;
+
+    cout << "Enter your desired " << stereo.getBand() << " radio frequency: ";
+
+    while(!valid){
+        if(!(cin >> frequencyInput) || frequencyInput < 0){
+            cout << endl << "Please try again. Enter a valid frequency." << endl;
+            cin.clear();
+            cin.ignore(10000, '\n');
+        }
+        else{
+            valid = true;
+        }
+    }
+
+    if(stereo.getBand() == "AM"){
+        stereo.setAMFrequency(frequencyInput);
+    }
+    else{
+        stereo.setFMFrequency(frequencyInput);
+    }
 }
