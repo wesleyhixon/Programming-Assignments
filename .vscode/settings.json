@@ -8,6 +8,7 @@
         "iosfwd": "cpp",
         "xlocmes": "cpp",
         "istream": "cpp",
-        "set": "cpp"
+        "set": "cpp",
+        "xstring": "cpp"
     }
 }

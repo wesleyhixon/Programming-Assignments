@@ -5,7 +5,7 @@
 
 using namespace std;
 
-
+// Stereo Class
 class stereoReciever{
     private:
         string manufacturer;
@@ -38,7 +38,7 @@ class stereoReciever{
         void setNumChannels(int numChannelsInput){
             numChannels = numChannelsInput;
         }
-        void changeBand(){
+        void changeBand(){      // Switches between AM and FM
             if(band == "AM"){
                 band = "FM";
             }
@@ -69,7 +69,7 @@ class stereoReciever{
             }
         }
         void setBass(int bassInput){
-            if(bassInput <= 5 && bassInput >= -5){
+            if(bassInput <= 5 && bassInput >= -5){      // Bass is from -5 to 5
                 bass = bassInput;
             }
             else{
@@ -77,7 +77,7 @@ class stereoReciever{
             }
         }
         void setTreble(int trebleInput){
-            if(trebleInput <= 5 && trebleInput >= -5){
+            if(trebleInput <= 5 && trebleInput >= -5){  // Treble is also from -5 to 5
                 treble = trebleInput;
             }
             else{
@@ -136,17 +136,99 @@ class stereoReciever{
         }
 };
 
+// Function prototypes
+void buildNewStereo(stereoReciever& stereo);
 void displayStereo(stereoReciever stereo);
 void changeBand(stereoReciever& stereo);
 bool getBoolInput(string prompt);
 void changeFrequency(stereoReciever& stereo);
+void changeVolume(stereoReciever& stereo);
+void changeBass(stereoReciever& stereo);
+void changeTreble(stereoReciever& stereo);
 
 int main(){
-    stereoReciever userStereo;
+    stereoReciever userStereo;  // Initializing stereo
 
     cout << "Welcome to the stereo reciever simulation!" << endl
     << "Please create your new stereo reciever." << endl;
+    
+    // Building stereo
+    buildNewStereo(userStereo);
+    
 
+    // Turn stereo on
+    userStereo.togglePower();
+
+    bool menu = true;
+    bool valid;
+
+    // Menu where you can edit stereo attributes
+    while(menu){
+
+        int menuChoice;
+
+        cout << endl << "Input a number between 1 and 7 to select any of the following options:" << endl
+        << "1. View Stereo Attrubutes" << endl
+        << "2. Change Band (AM / FM)" << endl
+        << "3. Change Radio Frequency" << endl
+        << "4. Change Volume" << endl
+        << "5. Change Bass" << endl
+        << "6. Change Treble" << endl
+        << "7. Power Off" << endl;
+
+        valid = false;
+
+        // Get menu choice
+        while(!valid){
+            if(!(cin >> menuChoice) || menuChoice < 1 || menuChoice > 7){
+                cout << "Please enter a valid menu choice." << endl;
+                cin.clear();
+                cin.ignore(10000, '\n');
+            }
+            else{
+                valid = true;
+            }
+        }
+
+        // Switch statement for menu
+        switch(menuChoice){
+            case 1:
+                displayStereo(userStereo);
+                break;
+            case 2:
+                changeBand(userStereo);
+                break;
+            case 3:
+                changeFrequency(userStereo);
+                break;
+            case 4:
+                // change volume
+                changeVolume(userStereo);
+                break;
+            case 5:
+                // Change bass
+                changeBass(userStereo);
+                break;
+            case 6:
+                // Change treble
+                changeTreble(userStereo);
+                break;
+            case 7:
+                bool input = getBoolInput("Are you sure you would like to exit? Type (y/n)");
+                if(input == true){
+                    userStereo.togglePower();
+                    menu = false;
+                }
+                break;
+        }
+    }
+
+    return 0;
+}
+
+// Prompts for characteristics of a new stereo and builds it
+void buildNewStereo(stereoReciever& stereo){
+    // Get manufacturer
     cout << "Who is the manufacturer of your new stereo? E.g. Yamaha, JBL, Bose, etc." << endl;
 
     bool valid = false;
@@ -162,6 +244,7 @@ int main(){
         }
     }
 
+    // Get model
     cout << "Enter the model of your new stereo." << endl;
     
     valid = false;
@@ -177,6 +260,7 @@ int main(){
         }
     }
 
+    // Get serial number
     cout << "Enter the serial number of your new stereo." << endl;
 
     int serialNum;
@@ -193,6 +277,7 @@ int main(){
         }
     }
 
+    // Get wattage
     cout << "Enter the wattage of your new stereo." << endl;
 
     int wattage;
@@ -209,6 +294,7 @@ int main(){
         }
     }
 
+    // Get number of channels
     cout << "Enter the number of channels for your new stereo." << endl;
 
     int numChannels;
@@ -227,65 +313,10 @@ int main(){
 
 
     // Build new stereo with constructor
-    userStereo.stereoConstructor(manufacturer, model, serialNum, wattage, numChannels);
-
-    // Turn stereo on
-    userStereo.togglePower();
-
-    bool menu = true;
-    
-    while(menu){
-
-        int menuChoice;
-
-        cout << endl << "Input a number between 1 and 5 to select any of the following options:" << endl
-        << "1. View Stereo Attrubutes" << endl
-        << "2. Change Band (AM / FM)" << endl
-        << "3. Change Radio Frequency" << endl
-        << "4. Change Volume" << endl
-        << "5. Power Off" << endl;
-
-        valid = false;
-
-        while(!valid){
-            if(!(cin >> menuChoice) || menuChoice < 1 || menuChoice > 5){
-                cout << "Please enter a valid menu choice." << endl;
-                cin.clear();
-                cin.ignore(10000, '\n');
-            }
-            else{
-                valid = true;
-            }
-        }
-
-        switch(menuChoice){
-            case 1:
-                displayStereo(userStereo);
-                break;
-            case 2:
-                changeBand(userStereo);
-                break;
-            case 3:
-                // change frequency
-                changeFrequency(userStereo);
-                break;
-            case 4:
-                // change volume
-                break;
-            case 5:
-                bool input = getBoolInput("Are you sure you would like to exit? Type (y/n)");
-                if(input == true){
-                    userStereo.togglePower();
-                    menu = false;
-                }
-                break;
-        }
-
-    }
-
-    return 0;
+    stereo.stereoConstructor(manufacturer, model, serialNum, wattage, numChannels);
 }
 
+// Displays all stereo characteristics
 void displayStereo(stereoReciever stereo){
     
     cout << endl << "This is your current stereo's attributes:" << endl
@@ -302,15 +333,8 @@ void displayStereo(stereoReciever stereo){
     return;
 }
 
-// WIP
-/*
-bool getValidInput(string& input){
-    bool valid = false;
-    cin >> input;
-    
-}
-*/
 
+// Changes from AM to FM and vice versa
 void changeBand(stereoReciever& stereo){
     string band = stereo.getBand();
 
@@ -318,11 +342,13 @@ void changeBand(stereoReciever& stereo){
 
     bool input = getBoolInput("Would you like to switch bands? (Type y/n)");
 
-    if(input = true){
+    if(input == true){
         stereo.changeBand();
     }
 }
 
+
+// Gets a yes or no input given a prompt
 bool getBoolInput(string prompt){
     bool valid = false;
     char input;
@@ -348,9 +374,12 @@ bool getBoolInput(string prompt){
     }
 }
 
+
+// Changes the AM/FM frequency, depending on which one is enabled
 void changeFrequency(stereoReciever& stereo){
     double frequency;
 
+    // Gets the frequency which corresponds to the radio band
     if(stereo.getBand() == "AM"){
         frequency = stereo.getAMFrequency();
     }
@@ -358,7 +387,7 @@ void changeFrequency(stereoReciever& stereo){
         frequency = stereo.getFMFrequency();
     }
 
-
+    // Outputting current frequency
     cout << endl << stereo.getBand() << " radio frequency is currently set to " << frequency << endl;
     
     bool input = getBoolInput("Would you like to change it? (Type y/n)");
@@ -370,6 +399,7 @@ void changeFrequency(stereoReciever& stereo){
     bool valid = false;
     double frequencyInput;
 
+    // Getting desired frequency
     cout << "Enter your desired " << stereo.getBand() << " radio frequency: ";
 
     while(!valid){
@@ -383,10 +413,107 @@ void changeFrequency(stereoReciever& stereo){
         }
     }
 
+    // Changing frequency on stereo
     if(stereo.getBand() == "AM"){
         stereo.setAMFrequency(frequencyInput);
     }
     else{
         stereo.setFMFrequency(frequencyInput);
     }
+}
+
+
+// Prompt to change volume
+void changeVolume(stereoReciever& stereo){
+    // Outputting current volume
+    cout << "The volume is currently set to " << stereo.getVolume() << "." << endl;
+    
+    bool input = getBoolInput("Would you like to change it? (Type y/n) ");
+
+    if(input == false){
+        return;
+    }
+
+    // Getting desired volume
+    cout << "Enter your desired volume: ";
+
+    int volumeInput;
+    bool valid = false;
+    while(!valid){
+        if(!(cin >> volumeInput) || (volumeInput < 0 || volumeInput > 10)){
+            cout << endl << "Please try again. Enter a valid volume between 1 and 10." << endl;
+            cin.clear();
+            cin.ignore(10000, '\n');
+        }
+        else{
+            valid = true;
+        }
+    }
+
+    // Changing volume on stereo
+    stereo.setVolume(volumeInput);
+}
+
+
+// Prompt to change bass
+void changeBass(stereoReciever& stereo){
+    // Outputting current bass level
+    cout << "The bass level is currently set to " << stereo.getBass() << "." << endl;
+    
+    bool input = getBoolInput("Would you like to change it? (Type y/n) ");
+
+    if(input == false){
+        return;
+    }
+
+    // Getting desired bass level
+    cout << "Enter your desired bass level between -5 and 5: ";
+
+    int bassInput;
+    bool valid = false;
+    while(!valid){
+        if(!(cin >> bassInput) || (bassInput < -5 || bassInput > 5)){
+            cout << endl << "Please try again. Enter a valid volume between -5 and 5." << endl;
+            cin.clear();
+            cin.ignore(10000, '\n');
+        }
+        else{
+            valid = true;
+        }
+    }
+
+    // Changing bass on stereo
+    stereo.setBass(bassInput);
+}
+
+
+// Prompt to change treble
+void changeTreble(stereoReciever& stereo){
+    // Outputting current treble level
+    cout << "The treble level is currently set to " << stereo.getTreble() << "." << endl;
+    
+    bool input = getBoolInput("Would you like to change it? (Type y/n) ");
+
+    if(input == false){
+        return;
+    }
+
+    // Getting desired treble level
+    cout << "Enter your desired treble level between -5 and 5: ";
+
+    int trebleInput;
+    bool valid = false;
+    while(!valid){
+        if(!(cin >> trebleInput) || (trebleInput < -5 || trebleInput > 5)){
+            cout << endl << "Please try again. Enter a valid volume between -5 and 5." << endl;
+            cin.clear();
+            cin.ignore(10000, '\n');
+        }
+        else{
+            valid = true;
+        }
+    }
+
+    // Changing treble on stereo
+    stereo.setTreble(trebleInput);
 }
