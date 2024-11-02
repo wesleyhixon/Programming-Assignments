@@ -9,6 +9,7 @@
         "xlocmes": "cpp",
         "istream": "cpp",
         "set": "cpp",
-        "xstring": "cpp"
+        "xstring": "cpp",
+        "limits": "cpp"
     }
 }
