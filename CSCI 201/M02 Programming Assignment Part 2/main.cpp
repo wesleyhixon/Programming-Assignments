@@ -2,8 +2,19 @@
 #include <iomanip>
 #include <string>
 #include <cctype>
+#include <stdexcept>
 
 using namespace std;
+
+/*
+Name: Stereo Reciever with Exception Handling
+Author: Wesley Hixon
+Date Last Updated: 11/03/2024
+Purpose: User can create a stereo by inputting
+stereo characteristics which will be stored in stereoReciever object.
+Error handling is now implemented using try/catch blocks and exception classes.
+*/
+
 
 // Stereo Class
 class stereoReciever{
@@ -24,21 +35,112 @@ class stereoReciever{
     public:
         // Setter Methods
         void setManufacturer(string manufacturerInput){
+            // No try/catch because manufacturer string can be anything
             manufacturer = manufacturerInput;
         }
         void setModel(string modelInput){
+            // No try/catch because model string can be anything
             model = modelInput;
         }
         void setSerialNum(int serialNumInput){
-            serialNumber = serialNumInput;
+            try{
+                if(serialNumInput < 1) throw(invalid_argument("Invalid Value - Serial Number cannot be negative"));
+
+                serialNumber = serialNumInput;
+            }
+            // Error is rethrown to be handled further up the chain
+            // This is the same for all further setter methods
+            catch(const invalid_argument& e){
+                throw e;
+            }
         }
         void setWattage(int wattageInput){
-            wattage = wattageInput;
+            try{
+                // Check wattage greater than 0
+                if(wattageInput < 1) throw(invalid_argument("Invalid Value - Wattage must be greater than 0"));
+
+                wattage = wattageInput;
+            }
+            // Throw error further up the chain
+            catch(const invalid_argument& e){
+                throw e;
+            }
         }
         void setNumChannels(int numChannelsInput){
-            numChannels = numChannelsInput;
+            try{
+                // Check num channels greater than 1
+                if(numChannelsInput < 1) throw(invalid_argument("Invalid Value - Number of channels must be at least 1"));
+
+                numChannels = numChannelsInput;
+            }
+            // Throw error further up the chain
+            catch(const invalid_argument& e){
+                throw e;
+            }
         }
-        void changeBand(){      // Switches between AM and FM
+        void setFMFrequency(double frequencyInput){
+            try{
+                // Check FM frequency is within the valid range for US regulations
+                if(frequencyInput < 88 || frequencyInput > 108) throw(invalid_argument("Invalid Value - FM Frequency must be between 88 and 108 mHz"));
+                
+                fmFrequency = frequencyInput;
+            }
+            // Throw error further up the chain
+            catch(const invalid_argument& e){
+                throw e;
+            }
+        }
+        void setAMFrequency(int frequencyInput){
+            try{
+                // Check AM frequency is within the valid range for US regulations
+                if(frequencyInput < 540 || frequencyInput > 1700) throw(invalid_argument("Invalid Value - AM Frequency must be between 540 and 1700 kHz"));
+                
+                amFrequency = frequencyInput;
+            }
+            // Throw error further up the chain
+            catch(const invalid_argument& e){
+                throw e;
+            }
+        }
+        void setVolume(int volumeInput){
+            try{
+                // Check volume between 0 and 10
+                if(volumeInput > 10 || volumeInput < 0) throw(invalid_argument("Invalid Value - Volume must be between 0 and 10"));
+
+                volume = volumeInput;
+            }
+            // Throw error further up the chain
+            catch(const invalid_argument& e){
+                throw e;
+            }
+        }
+        void setBass(int bassInput){
+            try{
+                // Check bass between -5 and 5
+                if(bassInput < -5 || bassInput > 5) throw(invalid_argument("Invalid Value - Bass must be between -5 and 5"));
+
+                bass = bassInput;
+            }
+            // Throw error further up the chain
+            catch(const invalid_argument& e){
+                throw e;
+            }
+        }
+        void setTreble(int trebleInput){
+            try{
+                // Check treble between -5 and 5
+                if(trebleInput < -5 || trebleInput > 5) throw(invalid_argument("Invalid Value - Treble must be between -5 and 5"));
+
+                treble = trebleInput;
+            }
+            // Throw error further up the chain
+            catch(const invalid_argument& e){
+                throw e;
+            }
+        }
+
+        // Switches between AM and FM
+        void changeBand(){
             if(band == "AM"){
                 band = "FM";
             }
@@ -46,20 +148,7 @@ class stereoReciever{
                 band = "AM";
             }
         }
-        void setFMFrequency(double frequencyInput){
-            fmFrequency = frequencyInput;
-        }
-        void setAMFrequency(int frequencyInput){
-            amFrequency = frequencyInput;
-        }
-        void setVolume(int volumeInput){
-            if(volumeInput <= 10 && volumeInput >= 0){
-                volume = volumeInput;
-            }
-            else{
-                cout << "Invalid Volume!" << endl;
-            }
-        }
+
         void togglePower(){
             if(power){
                 power = false;
@@ -68,23 +157,6 @@ class stereoReciever{
                 power = true;
             }
         }
-        void setBass(int bassInput){
-            if(bassInput <= 5 && bassInput >= -5){      // Bass is from -5 to 5
-                bass = bassInput;
-            }
-            else{
-                cout << "Invalid bass level!" << endl;
-            }
-        }
-        void setTreble(int trebleInput){
-            if(trebleInput <= 5 && trebleInput >= -5){  // Treble is also from -5 to 5
-                treble = trebleInput;
-            }
-            else{
-                cout << "Invalid treble level!" << endl;
-            }
-        }
-
 
         // Getter Methods
         string getManufacturer(){
@@ -123,21 +195,29 @@ class stereoReciever{
         int getTreble(){
             return treble;
         }
+        // Default constructor just initializes with no default values
+        stereoReciever(){
+        }
 
-        void stereoConstructor(string manufacturerInput, string modelInput, int serialNumberInput, int wattageInput, int numChannelsInput){
+        stereoReciever(string manufacturerInput, string modelInput, int serialNumberInput, int wattageInput, int numChannelsInput){
             // Set values user provided
-            setManufacturer(manufacturerInput);
-            setModel(modelInput);
-            setSerialNum(serialNumberInput);
-            setWattage(wattageInput);
-            setNumChannels(numChannelsInput);
+            try{
+                setManufacturer(manufacturerInput);
+                setModel(modelInput);
+                setSerialNum(serialNumberInput);
+                setWattage(wattageInput);
+                setNumChannels(numChannelsInput);
 
-            // Everything else has a default value
+                // Everything else is default
+            }
+            catch(const exception& e){
+                throw e;
+            }
         }
 };
 
 // Function prototypes
-void buildNewStereo(stereoReciever& stereo);
+stereoReciever buildNewStereo();
 void displayStereo(stereoReciever stereo);
 void changeBand(stereoReciever& stereo);
 bool getBoolInput(string prompt);
@@ -153,7 +233,7 @@ int main(){
     << "Please create your new stereo reciever." << endl;
     
     // Building stereo
-    buildNewStereo(userStereo);
+    userStereo = buildNewStereo();
     
 
     // Turn stereo on
@@ -180,13 +260,17 @@ int main(){
 
         // Get menu choice
         while(!valid){
-            if(!(cin >> menuChoice) || menuChoice < 1 || menuChoice > 7){
-                cout << "Please enter a valid menu choice." << endl;
-                cin.clear();
-                cin.ignore(10000, '\n');
-            }
-            else{
+            try{
+                if(!(cin >> menuChoice) || (menuChoice < 1 || menuChoice > 7)){
+                    cin.clear();
+                    cin.ignore(10000, '\n');
+                    throw(runtime_error("Invalid input. Please enter a number between 1 and 7."));
+                }
+
                 valid = true;
+            }
+            catch(const exception& e){
+                cerr << endl << e.what() << endl;
             }
         }
 
@@ -199,10 +283,11 @@ int main(){
                 changeBand(userStereo);
                 break;
             case 3:
+                // Change frequency
                 changeFrequency(userStereo);
                 break;
             case 4:
-                // change volume
+                // change Volume
                 changeVolume(userStereo);
                 break;
             case 5:
@@ -226,23 +311,30 @@ int main(){
     return 0;
 }
 
-// Prompts for characteristics of a new stereo and builds it
-void buildNewStereo(stereoReciever& stereo){
+// Prompts for characteristics of a new stereo and returns it
+stereoReciever buildNewStereo(){
+    stereoReciever newStereo;
+
     // Get manufacturer
     cout << "Who is the manufacturer of your new stereo? E.g. Yamaha, JBL, Bose, etc." << endl;
 
     bool valid = false;
     string manufacturer;
     while(!valid){
-        if(!(cin >> manufacturer)){
-            cout << "Try again. Enter the name of your stereo's manufacturer" << endl;
-            cin.clear();
-            cin.ignore(10000, '\n');
-        }
-        else{
+        try{
+            if(!(cin >> manufacturer)){
+                cin.clear();
+                cin.ignore(10000, '\n');
+                throw(runtime_error("Invalid input. Please try again."));
+            }
+            newStereo.setManufacturer(manufacturer);
             valid = true;
         }
+        catch(const exception& e){
+            cerr << endl << e.what() << endl;
+        }
     }
+
 
     // Get model
     cout << "Enter the model of your new stereo." << endl;
@@ -250,13 +342,17 @@ void buildNewStereo(stereoReciever& stereo){
     valid = false;
     string model;
     while(!valid){
-        if(!(cin >> model)){
-            cout << "Please try again. Enter the model of your new stereo." << endl;
-            cin.clear();
-            cin.ignore(10000, '\n');
-        }
-        else{
+        try{
+            if(!(cin >> model)){
+                cin.clear();
+                cin.ignore(10000, '\n');
+                throw(runtime_error("Invalid input. Please try again."));
+            }
+            newStereo.setModel(model);
             valid = true;
+        }
+        catch(const exception& e){
+            cerr << endl << e.what() << endl;
         }
     }
 
@@ -266,14 +362,17 @@ void buildNewStereo(stereoReciever& stereo){
     int serialNum;
     valid = false;
     while(!valid){
-        if(!(cin >> serialNum)){
-            cout << "Please try again. Enter the serial number of your new stereo." << endl;
-            cin.clear();
-            cin.ignore(10000, '\n');
-        }
-
-        else{
+        try{
+            if(!(cin >> serialNum)){
+                cin.clear();
+                cin.ignore(10000, '\n');
+                throw(runtime_error("Invalid input. Please try again."));
+            }
+            newStereo.setSerialNum(serialNum);
             valid = true;
+        }
+        catch(const exception& e){
+            cerr << endl << e.what() << endl;
         }
     }
 
@@ -283,14 +382,17 @@ void buildNewStereo(stereoReciever& stereo){
     int wattage;
     valid = false;
     while(!valid){
-        if(!(cin >> wattage) || wattage < 0){
-            cout << "Please try again. Enter a valid wattage." << endl;
-            cin.clear();
-            cin.ignore(10000, '\n');
-        }
-
-        else{
+        try{
+            if(!(cin >> wattage)){
+                cin.clear();
+                cin.ignore(10000, '\n');
+                throw(runtime_error("Invalid input. Please try again."));
+            }
+            newStereo.setWattage(wattage);
             valid = true;
+        }
+        catch(const exception& e){
+            cerr << endl << e.what() << endl;
         }
     }
 
@@ -300,20 +402,23 @@ void buildNewStereo(stereoReciever& stereo){
     int numChannels;
     valid = false;
     while(!valid){
-        if(!(cin >> numChannels) || numChannels <= 0){
-            cout << "Please try again. Enter a valid number of channels." << endl;
-            cin.clear();
-            cin.ignore(10000, '\n');
-        }
-
-        else{
+        try{
+            if(!(cin >> numChannels)){
+                cin.clear();
+                cin.ignore(10000, '\n');
+                throw(runtime_error("Invalid input. Please try again."));
+            }
+            newStereo.setNumChannels(numChannels);
             valid = true;
+        }
+        catch(const exception& e){
+            cerr << endl << e.what() << endl;
         }
     }
 
 
-    // Build new stereo with constructor
-    stereo.stereoConstructor(manufacturer, model, serialNum, wattage, numChannels);
+    // return new stereo
+    return newStereo;
 }
 
 // Displays all stereo characteristics
@@ -325,7 +430,7 @@ void displayStereo(stereoReciever stereo){
     << "Serial Number: " << stereo.getSerialNum() << endl
     << "Wattage: " << stereo.getWattage() << endl
     << "Number of Channels: " << stereo.getNumChannels() << endl
-    << "Current Band:" << stereo.getBand() << endl
+    << "Current Band: " << stereo.getBand() << endl
     << "Current Volume: " << stereo.getVolume() << endl
     << "Current Bass Level: " << stereo.getBass() << endl
     << "Current Treble Level: " << stereo.getTreble() << endl;
@@ -356,13 +461,16 @@ bool getBoolInput(string prompt){
     cout << endl << prompt;
     
     while(!valid){
-        if(!(cin >> input) || (tolower(input) != 'y' && tolower(input) != 'n')){
-            cout << endl << "Please try again. Enter y or n." << endl;
-            cin.clear();
-            cin.ignore(100000, '\n');
-        }
-        else{
+        try{
+            if(!(cin >> input) || (tolower(input) != 'y' && tolower(input) != 'n')){
+                cin.clear();
+                cin.ignore(100000, '\n');
+                throw(runtime_error("Invalid input. Please enter y or n."));
+            }
             valid = true;
+        }
+        catch(const exception& e){
+            cerr << endl << e.what() << endl;
         }
     }
 
@@ -403,23 +511,28 @@ void changeFrequency(stereoReciever& stereo){
     cout << "Enter your desired " << stereo.getBand() << " radio frequency: ";
 
     while(!valid){
-        if(!(cin >> frequencyInput) || frequencyInput < 0){
-            cout << endl << "Please try again. Enter a valid frequency." << endl;
-            cin.clear();
-            cin.ignore(10000, '\n');
-        }
-        else{
+        try{
+            if(!(cin >> frequencyInput)){
+                cin.clear();
+                cin.ignore(10000, '\n');
+                throw(runtime_error("Invalid input. Please try again."));
+            }
+
+            if(stereo.getBand() == "AM"){
+                stereo.setAMFrequency(frequencyInput);
+            }
+            else{
+                stereo.setFMFrequency(frequencyInput);
+            }
+
             valid = true;
+        }
+        catch(const exception& e){
+            cerr << endl << e.what() << endl;
         }
     }
 
     // Changing frequency on stereo
-    if(stereo.getBand() == "AM"){
-        stereo.setAMFrequency(frequencyInput);
-    }
-    else{
-        stereo.setFMFrequency(frequencyInput);
-    }
 }
 
 
@@ -439,19 +552,22 @@ void changeVolume(stereoReciever& stereo){
 
     int volumeInput;
     bool valid = false;
+
     while(!valid){
-        if(!(cin >> volumeInput) || (volumeInput < 0 || volumeInput > 10)){
-            cout << endl << "Please try again. Enter a valid volume between 1 and 10." << endl;
-            cin.clear();
-            cin.ignore(10000, '\n');
-        }
-        else{
+        try{
+            if(!(cin >> volumeInput)){
+                cin.clear();
+                cin.ignore(10000, '\n');
+                throw(runtime_error("Invalid input. Please try again."));
+            }
+
+            stereo.setVolume(volumeInput);
             valid = true;
         }
+        catch(const exception& e){
+            cerr << endl << e.what() << endl;
+        }
     }
-
-    // Changing volume on stereo
-    stereo.setVolume(volumeInput);
 }
 
 
@@ -472,18 +588,19 @@ void changeBass(stereoReciever& stereo){
     int bassInput;
     bool valid = false;
     while(!valid){
-        if(!(cin >> bassInput) || (bassInput < -5 || bassInput > 5)){
-            cout << endl << "Please try again. Enter a valid volume between -5 and 5." << endl;
-            cin.clear();
-            cin.ignore(10000, '\n');
-        }
-        else{
+        try{
+            if(!(cin >> bassInput)){
+                cin.clear();
+                cin.ignore(10000, '\n');
+                throw(runtime_error("Invalid input. Please try again."));
+            }
+            stereo.setBass(bassInput);
             valid = true;
         }
+        catch(const exception& e){
+            cerr << endl << e.what() << endl;
+        }
     }
-
-    // Changing bass on stereo
-    stereo.setBass(bassInput);
 }
 
 
@@ -504,16 +621,17 @@ void changeTreble(stereoReciever& stereo){
     int trebleInput;
     bool valid = false;
     while(!valid){
-        if(!(cin >> trebleInput) || (trebleInput < -5 || trebleInput > 5)){
-            cout << endl << "Please try again. Enter a valid volume between -5 and 5." << endl;
-            cin.clear();
-            cin.ignore(10000, '\n');
-        }
-        else{
+        try{
+            if(!(cin >> trebleInput)){
+                cin.clear();
+                cin.ignore(10000, '\n');
+                throw(runtime_error("Invalid input. Please try again."));
+            }
+            stereo.setTreble(trebleInput);
             valid = true;
         }
+        catch(const exception& e){
+            cerr << endl << e.what() << endl;
+        }
     }
-
-    // Changing treble on stereo
-    stereo.setTreble(trebleInput);
 }
