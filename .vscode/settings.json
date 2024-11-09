@@ -11,6 +11,7 @@
         "set": "cpp",
         "xstring": "cpp",
         "limits": "cpp",
-        "array": "cpp"
+        "array": "cpp",
+        "stdexcept": "cpp"
     }
 }
