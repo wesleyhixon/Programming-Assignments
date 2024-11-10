@@ -7,6 +7,17 @@
 
 using namespace std;
 
+/*
+Program Name: Computer Inventory
+Author: Wesley Hixon
+Date Last Updated: 11/10/2024
+Purpose: This program will create an inventory of personal computers.
+Simply input manufacturer, form factor, serial number, processor, ram, and storage type/size
+for as many computers as you'd like.
+*/
+
+
+// Function template to get input for any data type
 template <typename T>
 T getInput(string prompt, string errorMessage){
     bool valid = false;
@@ -25,9 +36,10 @@ T getInput(string prompt, string errorMessage){
     return input;
 }
 
-
+// Enum for different storage types
 enum storageTypes{SSD, HDD, UFS};
 
+// Computer class to store characteristics and methods
 class computer{
     private:
         string manufacturer;
@@ -48,12 +60,23 @@ class computer{
             storageTypes inputStorageType, 
             string inputStorageSize
             ){
-
-
+                try{
+                    setManufacturer(inputManufacturer);
+                    setFormFactor(inputFormFactor);
+                    setSerialNum(inputSerialNum);
+                    setProcessor(inputProcessor);
+                    setRam(inputRam);
+                    setStorageType(inputStorageType);
+                    setStorageSize(inputStorageSize);
+                }catch(const exception& e){
+                    cerr << endl << e.what() << endl;
+                }
         }
+
+        // Default constructor initializes with no defaults
         computer(){}
 
-        // Mutator Methods
+        // Mutator Methods w/ error handling
         void setManufacturer(string inputManufacturer){manufacturer = inputManufacturer;}
         void setFormFactor(string inputFormFactor){formFactor = inputFormFactor;}
         void setSerialNum(int inputSerialNum){
@@ -65,6 +88,7 @@ class computer{
             int validRam[6] = {4, 6, 8, 16, 32, 64};
             bool valid = false;
 
+            // Check if ram is valid before setting
             for(int i = 0; i < 6; i++){
                 if(inputRam == validRam[i]){
                     valid = true;
@@ -90,6 +114,7 @@ class computer{
         storageTypes getStorageType(){return storageType;}
         string getStorageSize(){return storageSize;}
 
+        // Creates a string describing computer
         string toString(){
             string computerString;
             string storageTypeString;
@@ -116,43 +141,50 @@ class computer{
         }
 };
 
+// Function declarations
 computer getComputer();
 bool inRange(int input, int startRange, int endRange);
 int menu();
+void printComputers(vector<computer> &computers);
 
 int main(){
     vector<computer> computers;
     int computerIndex = 0;
-    
+
+    // Create first computer
     computer newComputer = getComputer();
     computers.push_back(newComputer);
 
+    // Output computer
     cout << "You've created " << computerIndex + 1 << " computers." << endl;
     cout << "Here is the computer you just created:" << endl;
     cout << computers[computerIndex].toString() << endl;
 
     bool running = true;
     while(running){
-
+        
+        // Get menu input for main menu
         int menuChoice = menu();
 
         switch(menuChoice){
         case 1:
+            // Make new computer, add to vector
             newComputer = getComputer();
             computers.push_back(newComputer);
             computerIndex++;
+
+            // Output computer they just made and total num of computers
+            cout << endl << "You've created " << computerIndex + 1 << " computers." << endl;
+            cout << "Here is the computer you just created:" << endl;
+            cout << computers[computerIndex].toString() << endl;
             break;
         case 2:
-            cout << "Here are all of the computers you've created:" << endl << endl;
-            for(int i = 0; i < computers.size(); i++){
-                cout << "Computer " << i + 1 << ":"<< endl << computers[i].toString() << endl;
-            }
+            // Output computers made so far
+            printComputers(computers);
             break;
         case 3:
-            cout << "Here are all of the computers you've created:" << endl << endl;
-            for(int i = 0; i < computers.size(); i++){
-                cout << computers[i].toString() << endl;
-            }
+            // Output computers and exit program
+            printComputers(computers);
             cout << "Goodbye!" << endl;
 
             running = false;
@@ -161,6 +193,7 @@ int main(){
     return 0;
 }
 
+// Gets input for main menu
 int menu(){
     cout << "Please choose from the following options:" << endl
     << "1. Create a computer" << endl
@@ -192,10 +225,30 @@ computer getComputer(){
     manufacturer = getInput<string>("Please enter the manufacturer of your computer: ", "Try again. Enter the manufacturer of your computer.");
     newComputer.setManufacturer(manufacturer);
 
-    // Getting form factor
+    // Getting form factor with menu
+
+    cout << "Please choose an option for the form factor of your computer:" << endl
+    << "1. Desktop" << endl
+    << "2. Laptop" << endl;
+
+    int formFactorChoice;
+    valid = false;
+    while(!valid){
+        try{        // Getting int between 1 and 2
+            formFactorChoice = getInput<int>("", "Try again. Enter an int between 1 and 2.");
+            if(!inRange(formFactorChoice, 1, 2)) throw(invalid_argument("Please enter an int between 1 and 2."));
+            valid = true;
+        }catch(const exception& e){
+            cerr << endl << e.what() << endl;
+        }
+    }
 
     string formFactor;
-    formFactor = getInput<string>("Please enter the form factor of your computer (desktop/laptop): ", "Try again. Enter the form factor of your computer.");
+
+    if(formFactorChoice == 1){formFactor = "Desktop";}
+    else{formFactor = "Laptop";}
+
+    // Setting form factor    
     newComputer.setFormFactor(formFactor);
 
     // Getting serial number greater than 0
@@ -250,7 +303,7 @@ computer getComputer(){
             ram = 6;
             break;
         case 3:
-            ram = 12;
+            ram = 8;
             break;
         case 4:
             ram = 16;
@@ -289,7 +342,7 @@ computer getComputer(){
         }
     }
     // Setting storage type with static_cast to enum
-    storageTypes storageType = static_cast<storageTypes>(storageTypeChoice);
+    storageTypes storageType = static_cast<storageTypes>(storageTypeChoice - 1);
     newComputer.setStorageType(storageType);
 
 
@@ -338,7 +391,16 @@ computer getComputer(){
     return newComputer;
 }
 
+// Checks if an input is within a range given by startRange and endRange
 bool inRange(int input, int startRange, int endRange){
     if(input < startRange || input > endRange){return false;}
     else{return true;}
+}
+
+// Prints roster of computers
+void printComputers(vector<computer> &computers){
+    cout << endl << "Here are all of the computers you've created:" << endl << endl;
+    for(int i = 0; i < computers.size(); i++){
+        cout << computers[i].toString() << endl;
+    }
 }

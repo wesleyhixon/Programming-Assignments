@@ -1,0 +1,50 @@
+AL, Alabama, Camellia, Kay Ivey
+AK, Alaska, Forget-Me-Not, Mike Dunleavy
+AZ, Arizona, Saguaro Cactus Blossom, Katie Hobbs
+AR, Arkansas, Apple Blossom, Sarah Huckabee Sanders
+CA, California, California Poppy, Gavin Newsom
+CO, Colorado, Colorado Blue Columbine, Jared Polis
+CT, Connecticut, Mountain Laurel, Ned Lamont
+DE, Delaware, Peach Blossom, John Carney
+FL, Florida, Orange Blossom, Ron DeSantis
+GA, Georgia, Cherokee Rose, Brian Kemp
+HI, Hawaii, Hawaiian Hibiscus, Josh Green
+ID, Idaho, Syringa (Mock Orange), Brad Little
+IL, Illinois, Violet, J.B. Pritzker
+IN, Indiana, Peony, Eric Holcomb
+IA, Iowa, Wild Rose, Kim Reynolds
+KS, Kansas, Sunflower, Laura Kelly
+KY, Kentucky, Goldenrod, Andy Beshear
+LA, Louisiana, Magnolia, John Bel Edwards
+ME, Maine, White Pine Cone and Tassel, Janet Mills
+MD, Maryland, Black-Eyed Susan, Wes Moore
+MA, Massachusetts, Mayflower, Maura Healey
+MI, Michigan, Apple Blossom, Gretchen Whitmer
+MN, Minnesota, Lady's Slipper, Tim Walz
+MS, Mississippi, Magnolia, Tate Reeves
+MO, Missouri, Hawthorn, Mike Parson
+MT, Montana, Bitterroot, Greg Gianforte
+NE, Nebraska, Goldenrod, Jim Pillen
+NV, Nevada, Sagebrush, Joe Lombardo
+NH, New Hampshire, Purple Lilac, Maggie Hassan
+NJ, New Jersey, Purple Violet, Phil Murphy
+NM, New Mexico, Yucca Flower, Michelle Lujan Grisham
+NY, New York, Rose, Kathy Hochul
+NC, North Carolina, Dogwood, Roy Cooper
+ND, North Dakota, Wild Prairie Rose, Doug Burgum
+OH, Ohio, Red Carnation, Mike DeWine
+OK, Oklahoma, Oklahoma Rose, Kevin Stitt
+OR, Oregon, Oregon Grape, Tina Kotek
+PA, Pennsylvania, Mountain Laurel, Josh Shapiro
+RI, Rhode Island, Violet, Dan McKee
+SC, South Carolina, Yellow Jessamine, Henry McMaster
+SD, South Dakota, American Pasqueflower, Kristi Noem
+TN, Tennessee, Iris, Bill Lee
+TX, Texas, Bluebonnet, Greg Abbott
+UT, Utah, Sego Lily, Spencer Cox
+VT, Vermont, Red Clover, Phil Scott
+VA, Virginia, American Dogwood, Glenn Youngkin
+WA, Washington, Coast Red Cedar, Jay Inslee
+WV, West Virginia, Rhododendron, Jim Justice
+WI, Wisconsin, Wood Violet, Tony Evers
+WY, Wyoming, Indian Paintbrush, Mark Gordon

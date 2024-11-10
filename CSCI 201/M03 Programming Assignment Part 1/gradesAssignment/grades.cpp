@@ -6,27 +6,40 @@
 #include <array>
 #include <vector>
 
+/*
+Name: Grades Statistics
+Author: Wesley Hixon
+Date Last Updated: 11/08/2024
+Purpose: This program will take input for 16 quiz grades.
+Then it will output the highest score, the lowest score, and the average score.
+*/
+
 using namespace std;
 
+// Function definitions
 void getData(array<int, 16>& grades);
 int highScore(const array<int, 16>& grades);
 int lowScore(const array<int, 16>& grades);
 int averageScore(const array<int, 16>& grades);
 
 int main(){
+    // Creating grades array and getting data
     array<int, 16> grades;
     getData(grades);
 
+    // Finding max, min, and average score
     int maxIndex = highScore(grades);
     int minIndex = lowScore(grades);
     int average = averageScore(grades);
 
+    // Outputting all grades
     cout << endl << "Quiz Grades Report:" << endl;
 
     for(int i = 0; i < 16; i++){
         cout << "\tModule " << i + 1 << ": " << grades[i] << endl;
     }
-
+    
+    // Outputting average, low, and high scores
     cout << "Average grade: " << average << endl;
     cout << "Your lowest score was in Module " << minIndex + 1 << " with a " << grades[minIndex] << "." << endl;
     cout << "Your highest score was in Module " << maxIndex + 1 << " with a " << grades[maxIndex] << "." << endl;
@@ -38,9 +51,11 @@ void getData(array<int, 16>& grades){
     int moduleIndex = 0;
     bool valid = false;
 
+    // Iterating through each grade in array using for loop index
     for(moduleIndex; moduleIndex < 16; moduleIndex++){
         cout << "Please enter the quiz grade for Module " << moduleIndex + 1 << ": " << endl;
 
+        // Getting valid grade greater than 0 and storing it in array
         valid = false;
         while(!valid){
             try{
@@ -90,14 +105,18 @@ int lowScore(const array<int, 16>& grades){
     return minIndex;
 }
 
+
+// Finds the average score of all grades
 int averageScore(const array<int, 16>& grades){
     int average;
     int sum = 0;
 
+    // Finding sum
     for(int i = 0; i < 16; i++){
         sum += grades[i];
     }
 
+    // Finding average
     average = sum/16;
     return average;
 }
