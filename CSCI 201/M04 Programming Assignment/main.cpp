@@ -6,6 +6,8 @@
 #include <vector>
 #include <fstream>
 #include <random>
+#include <ctime>
+#include <array>
 
 using namespace std;
 
@@ -67,9 +69,30 @@ class nerfGun {
 
         string toString() const {
             string gunString;
+            string line(75, '-');
+            string newline;
+            int width = 74;
 
-            gunString = "Model: " + getModel() + "\nRange: " + to_string(range) + "\nDart Count: " + to_string(dartCount) 
-            + "\nCapacity: " + to_string(capacity);
+            gunString += '\n' + line;
+            newline = "\n| Model: " + getModel();
+            newline += string(width - newline.length(), ' ') + " |";
+            gunString += newline;
+            gunString += '\n' + line;
+
+            newline = "\n| Range: " + to_string(range) + " Feet";
+            newline += string(width - newline.length(), ' ') + " |";
+            gunString += newline;
+            gunString += '\n' + line;
+            
+            newline = "\n| Capacity: " + to_string(capacity) + " Darts";
+            newline += string(width - newline.length(), ' ') + " |";
+            gunString += newline;
+            gunString += '\n' + line;
+
+            newline = "\n| Dart Count: " + to_string(dartCount) + " Darts";
+            newline += string(width - newline.length(), ' ') + " |";
+            gunString += newline;
+            gunString += '\n' + line;
 
             return gunString;
         }
@@ -121,7 +144,7 @@ ostream& operator<<(ostream& output, const nerfGun& gun){
 }
 
 vector<nerfGun> initializeGuns();
-nerfGun inputGun(int gunNum);
+nerfGun generateGun();
 void displayGuns(const vector<nerfGun> &guns);
 nerfGun mostAmmunition(const vector<nerfGun> &guns);
 
@@ -131,16 +154,25 @@ int main(){
 
     guns = initializeGuns();
 
+    cout << "The following is the generated Nerf guns: " << endl;
+    displayGuns(guns);
 
     bool running = true;
     while(running){
         // Display guns
-        displayGuns(guns);
+        //displayGuns(guns);
 
         // Finds the gun with the most ammo in its clip
-        nerfGun mostAmmo = mostAmmunition(guns);
+        //nerfGun mostAmmo = mostAmmunition(guns);
+        
+        running = false;
     }
     return 0;
+}
+
+void menu(){
+    cout << "Please choose from the following menu options:" << endl;
+    
 }
 
 
@@ -149,26 +181,7 @@ vector<nerfGun> initializeGuns(){
     vector<nerfGun> guns;
 
     cout << "Initializing guns..." << endl;
-    int numOfGuns;
-
-    // Uses random number generator to generate a double between 0 and 1
-    random_device rd;
-    mt19937 gen(rd());
-    double randomNumber = generate_canonical<double, 10>(gen);
-
-    // Randomly chooses num of guns to be between 4 and 7
-    if(randomNumber < .25){
-        numOfGuns = 4;
-    }
-    else if(randomNumber >= .25 && randomNumber < .50){
-        numOfGuns = 5;
-    }
-    else if(randomNumber >= .50 && randomNumber < .75){
-        numOfGuns = 6;
-    }
-    else if(randomNumber >= .75){
-        numOfGuns = 7;
-    }
+    int numOfGuns = 4;
 
     cout << "Generating " << numOfGuns << " guns." << endl;
 
@@ -178,8 +191,8 @@ vector<nerfGun> initializeGuns(){
         valid = false;
         while(!valid){
             try{
-                // Get input for newGun
-                nerfGun newGun = inputGun(i);
+                // Get newGun
+                nerfGun newGun = generateGun();
                 
                 // Add newGun to guns vector
                 guns.push_back(newGun);
@@ -188,11 +201,6 @@ vector<nerfGun> initializeGuns(){
             catch(const exception& e){
                 // Throws exception and restarts gun creation
                 cerr << endl << "Exception caught: " << e.what() << endl;
-                cerr << "Please re-enter the data for this gun." << endl;
-
-                // Ignores newline for new gun input
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
             }
         }
     }
@@ -201,26 +209,54 @@ vector<nerfGun> initializeGuns(){
 }
 
 // Gets input for 1 nerf gun
-nerfGun inputGun(int gunNum){
+nerfGun generateGun(){
     string modelName;
     int range;
     int capacity;
+    string line(75, '-');
 
-    cout << endl << "Enter the model name for gun number " << gunNum+1 << ": ";
-    getline(cin, modelName);
+    // Creating random number generator
+    random_device rd;
+    mt19937 gen(rd());
 
-    cout << "Enter the range in feet: ";
-    cin >> range;
-    if(range < 1) throw(invalid_argument("Range cannot be less than 1"));
+    // Array of gun names to pick from
+    vector<string> gunNames{
+        "Nerf N-Strike Elite HyperFire Blaster",
+        "Nerf Elite Jr Explorer Blaster",
+        "Nerf Elite 2.0 Ace SD-1 Blaster",
+        "Nerf Elite 2.0 Eaglepoint RD-8 Blaster",
+        "Nerf N Series Infinite Blaster",
+        "Nerf N-Strike Elite Rhino-Fire Blaster",
+        "Nerf Pro Torrent Blaster",
+        "NERF LMTD Destiny 2 Ace of Spades Blaster",
+        "Nerf N-Strike Elite Retaliator Blaster",
+        "Nerf Zombie Corrupter Blaster",
+        "Nerf N Series Pinpoint Blaster"
+        "Nerf Rival Mirage XXIV-800 Blaster",
+        "NERF Rival Nemesis MXVII-10K Blaster",
+        "Nerf N-Strike Elite Rhino-Fire Blaster",
+        "Nerf Elite 2.0 Echo CS-10 Blaster",
+        "Nerf N-Strike Elite Hail-Fire Blaster"
+    };
 
-    cout << "Enter the dart capacity: ";
-    cin >> capacity;
-    if(capacity < 1 || capacity > 144) throw(invalid_argument("Capacity must be between 1 and 144"));
+    // Pick a random name for a gun from an array of names
 
-    // Clear newline from buffer
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    uniform_int_distribution<> nameDistribution(0, 14);
+    int randomIndex = nameDistribution(gen);
 
-    // Attempt to create a new gun with given inputs
+    modelName = gunNames[randomIndex];
+
+
+    // Generates random range between 1 and 50
+    uniform_int_distribution<> rangeDistribution(1,50);
+    range = rangeDistribution(gen);
+
+
+    // Generates random capacity between 1 and 144
+    uniform_int_distribution<> capacityDistribution(1,144);
+    capacity = capacityDistribution(gen);
+
+    // Create a new gun with random characteristics
     
     nerfGun newGun(modelName, range, capacity);
 
