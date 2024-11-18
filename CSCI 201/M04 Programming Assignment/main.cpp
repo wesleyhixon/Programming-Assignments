@@ -60,7 +60,7 @@ class nerfGun {
             int spaceLeft = capacity - dartCount;
 
             // Throws exception if not enough space in clip for reload amount
-            if(reloadAmount > spaceLeft) throw(overflow_error("Not enough space in clip to reload " + to_string(reloadAmount)));
+            if(reloadAmount > spaceLeft) throw(overflow_error("Not enough space in " + getModel() + " to reload " + to_string(reloadAmount) + " darts."));
             if(reloadAmount < 0) throw(invalid_argument("Reload amount cannot be less than 0"));
 
             // Reloads clip
@@ -92,7 +92,8 @@ class nerfGun {
             newline = "\n| Dart Count: " + to_string(dartCount) + " Darts";
             newline += string(width - newline.length(), ' ') + " |";
             gunString += newline;
-            gunString += '\n' + line;
+            gunString += '\n' + line + '\n';
+            
 
             return gunString;
         }
@@ -121,15 +122,24 @@ class nerfGun {
             }
             else{return false;}
         }
+        nerfGun operator--(){
+            nerfGun temp = *this;
+            fire();
+            return temp;
+        }
 
         // Fires gun and throws exception if dartCount == 0
-        void operator--(){
+        nerfGun operator--(int){
+            nerfGun temp = *this;
             fire();
+            return temp;
         }
 
         // Reloads gun and throws exception if reload amount is too much or negative
-        void operator+=(const int& reloadAmount){
+        nerfGun operator+=(const int& reloadAmount){
+            nerfGun temp = *this;
             reload(reloadAmount);
+            return temp;
         }
         
         // Declares stream extraction operator friend function
@@ -143,8 +153,7 @@ ostream& operator<<(ostream& output, const nerfGun& gun){
     return output;
 }
 
-vector<nerfGun> initializeGuns();
-nerfGun generateGun();
+
 void displayGuns(const vector<nerfGun> &guns);
 nerfGun mostAmmunition(const vector<nerfGun> &guns);
 int menu();
@@ -152,142 +161,61 @@ int menu();
 int main(){
     vector<nerfGun> guns;
 
-    guns = initializeGuns();
+    // Creating guns and adding to vector
+    nerfGun gun1("gun1", 15, 6);
+    guns.push_back(gun1);
+
+    nerfGun gun2("gun2", 10, 20);
+    guns.push_back(gun2);
+
+    nerfGun gun3("gun3", 13, 5);
+    guns.push_back(gun3);
+
+    nerfGun gun4("gun4", 10, 15);
+    guns.push_back(gun4);
 
     cout << "The following is the generated Nerf guns: ";
 
-    bool running = true;
-    while(running){
-        // Display guns
-        displayGuns(guns);
+    // Display guns
+    displayGuns(guns);
 
-        // Finds the gun with the most ammo in its clip
-        nerfGun mostAmmo = mostAmmunition(guns);
+    // Finds the gun with the most ammo in its clip
+    nerfGun mostAmmo = mostAmmunition(guns);
 
-        cout << endl << "The gun with the most ammo is:" << mostAmmo;
+    cout << endl << "The gun with the most ammo is:" << mostAmmo << endl;
 
-        if(menu() == 0){
-            running = false;
-            break;
+    
+    srand(time(0));
+    for(int i = 0; i < 10; i++){
+        try{
+        int gunIndex = rand() % guns.size();
+        int action = rand() % 2;
+
+        nerfGun *randGun = &guns[gunIndex];
+
+        switch(action){
+            case 0:
+                // Fire a random gun
+                (*randGun)--;
+                cout << "Fired gun: " << *randGun;
+                break;
+            case 1:
+                // Reload a random gun
+                (*randGun) += 1;
+                cout << "Reloaded gun: " << *randGun;
+                break;
         }
-
+        }catch(const exception& e){
+        cout << endl << e.what() << endl;
+        }
     }
+    
     return 0;
 }
 
-int menu(){
-    cout << "Please choose from the following menu options:" << endl;
-    cout << "1. Display guns" << endl;
-    cout << "2. Fire a gun" << endl;
-    cout << "3. Reload a gun" << endl;
-    cout << "4. Exit Program" << endl;
-
-    int userInput;
-    bool valid = false;
-    try{
-        while(!valid){
-            cin >> userInput;
-            if(cin.fail() || userInput < 1 || userInput > 4) throw(runtime_error("Please enter a valid input."));
-            valid = true;
-        }
-    }catch(const exception& e){
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        cerr << endl << e.what() << endl;
-    }
-
-    if(userInput < 4){
-        cout << "Which gun would you like to use?";
-    }
-}
 
 
-// Initializes a vector of between 4 and 7 nerf guns and gets input for each
-vector<nerfGun> initializeGuns(){
-    vector<nerfGun> guns;
-
-    cout << "Initializing guns..." << endl;
-    int numOfGuns = 4;
-
-    cout << "Generating " << numOfGuns << " guns." << endl;
-
-    bool valid;
-
-    for(int i = 0; i < numOfGuns; i++){
-        valid = false;
-        while(!valid){
-            try{
-                // Get newGun
-                nerfGun newGun = generateGun();
-                
-                // Add newGun to guns vector
-                guns.push_back(newGun);
-                valid = true;
-            }
-            catch(const exception& e){
-                // Throws exception and restarts gun creation
-                cerr << endl << "Exception caught: " << e.what() << endl;
-            }
-        }
-    }
-
-    return guns;
-}
-
-// Gets input for 1 nerf gun
-nerfGun generateGun(){
-    string modelName;
-    int range;
-    int capacity;
-    string line(75, '-');
-
-    // Creating random number generator
-    random_device rd;
-    mt19937 gen(rd());
-
-    // Array of gun names to pick from
-    vector<string> gunNames{
-        "Nerf N-Strike Elite HyperFire Blaster",
-        "Nerf Elite Jr Explorer Blaster",
-        "Nerf Elite 2.0 Ace SD-1 Blaster",
-        "Nerf Elite 2.0 Eaglepoint RD-8 Blaster",
-        "Nerf N Series Infinite Blaster",
-        "Nerf N-Strike Elite Rhino-Fire Blaster",
-        "Nerf Pro Torrent Blaster",
-        "NERF LMTD Destiny 2 Ace of Spades Blaster",
-        "Nerf N-Strike Elite Retaliator Blaster",
-        "Nerf Zombie Corrupter Blaster",
-        "Nerf N Series Pinpoint Blaster",
-        "Nerf Rival Mirage XXIV-800 Blaster",
-        "NERF Rival Nemesis MXVII-10K Blaster",
-        "Nerf N-Strike Elite Rhino-Fire Blaster",
-        "Nerf Elite 2.0 Echo CS-10 Blaster"
-    };
-
-    // Pick a random name for a gun from an array of names
-
-    uniform_int_distribution<> nameDistribution(0, 14);
-    int randomIndex = nameDistribution(gen);
-
-    modelName = gunNames[randomIndex];
-
-
-    // Generates random range between 1 and 50
-    uniform_int_distribution<> rangeDistribution(1,50);
-    range = rangeDistribution(gen);
-
-
-    // Generates random capacity between 1 and 144
-    uniform_int_distribution<> capacityDistribution(1,144);
-    capacity = capacityDistribution(gen);
-
-    // Create a new gun with random characteristics
-    
-    nerfGun newGun(modelName, range, capacity);
-
-    return newGun;
-}
-
+// Displays all nerf guns using pointers
 void displayGuns(const vector<nerfGun> &guns){
 
     // Iterates through guns vector with pointer
