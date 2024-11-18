@@ -147,32 +147,58 @@ vector<nerfGun> initializeGuns();
 nerfGun generateGun();
 void displayGuns(const vector<nerfGun> &guns);
 nerfGun mostAmmunition(const vector<nerfGun> &guns);
-
+int menu();
 
 int main(){
     vector<nerfGun> guns;
 
     guns = initializeGuns();
 
-    cout << "The following is the generated Nerf guns: " << endl;
-    displayGuns(guns);
+    cout << "The following is the generated Nerf guns: ";
 
     bool running = true;
     while(running){
         // Display guns
-        //displayGuns(guns);
+        displayGuns(guns);
 
         // Finds the gun with the most ammo in its clip
-        //nerfGun mostAmmo = mostAmmunition(guns);
-        
-        running = false;
+        nerfGun mostAmmo = mostAmmunition(guns);
+
+        cout << endl << "The gun with the most ammo is:" << mostAmmo;
+
+        if(menu() == 0){
+            running = false;
+            break;
+        }
+
     }
     return 0;
 }
 
-void menu(){
+int menu(){
     cout << "Please choose from the following menu options:" << endl;
-    
+    cout << "1. Display guns" << endl;
+    cout << "2. Fire a gun" << endl;
+    cout << "3. Reload a gun" << endl;
+    cout << "4. Exit Program" << endl;
+
+    int userInput;
+    bool valid = false;
+    try{
+        while(!valid){
+            cin >> userInput;
+            if(cin.fail() || userInput < 1 || userInput > 4) throw(runtime_error("Please enter a valid input."));
+            valid = true;
+        }
+    }catch(const exception& e){
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cerr << endl << e.what() << endl;
+    }
+
+    if(userInput < 4){
+        cout << "Which gun would you like to use?";
+    }
 }
 
 
@@ -231,12 +257,11 @@ nerfGun generateGun(){
         "NERF LMTD Destiny 2 Ace of Spades Blaster",
         "Nerf N-Strike Elite Retaliator Blaster",
         "Nerf Zombie Corrupter Blaster",
-        "Nerf N Series Pinpoint Blaster"
+        "Nerf N Series Pinpoint Blaster",
         "Nerf Rival Mirage XXIV-800 Blaster",
         "NERF Rival Nemesis MXVII-10K Blaster",
         "Nerf N-Strike Elite Rhino-Fire Blaster",
-        "Nerf Elite 2.0 Echo CS-10 Blaster",
-        "Nerf N-Strike Elite Hail-Fire Blaster"
+        "Nerf Elite 2.0 Echo CS-10 Blaster"
     };
 
     // Pick a random name for a gun from an array of names
@@ -264,6 +289,7 @@ nerfGun generateGun(){
 }
 
 void displayGuns(const vector<nerfGun> &guns){
+
     // Iterates through guns vector with pointer
     for(auto ptr = guns.begin(); ptr != guns.end(); ptr++){
         // Outputs each gun
