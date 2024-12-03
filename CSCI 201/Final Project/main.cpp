@@ -2,8 +2,19 @@
 #include <vector>
 #include <string>
 #include <chrono>
+#include <ctime>
 
 using namespace std;
+
+vector<string> randomNames = {
+    "Olivia", "Liam", "Emma", "Noah", "Ava", "William", "Sophia", "James", "Isabella", 
+    "Benjamin", "Mia", "Lucas", "Charlotte", "Henry", "Amelia", "Alexander", "Evelyn", 
+    "Michael", "Harper", "Ethan", "Luna", "Daniel", "Ella", "Matthew", "Scarlett", 
+    "David", "Victoria", "Joseph", "Chloe", "Samuel", "Grace", "Jackson", "Zoey", 
+    "Sebastian", "Lily", "Aiden", "Penelope", "Caleb", "Hannah", "Mason", "Aria", 
+    "Luke", "Audrey", "Nathan", "Nora", "Logan", "Riley", "Dylan", "Violet", "Owen"
+};
+
 
 template <typename T>
 T getNumInput(int lowerBound, int upperBound){
@@ -53,17 +64,20 @@ class Employee{
 
 class Customer{
     private:
+    string name;
     menuItem order;
     bool placedOrder;
     bool receivedOrder;
     double waitTime;
 
     public:
+    Customer(string inputName, menuItem inputOrder): name(inputName), order(inputOrder) {};
     void placeOrder(){}
     bool orderReceived(){}
     bool orderPlaced(){}
     double getWaitTime(){}
     void incrementWaitTime(){}
+    void setName(string inputName){name = inputName;}
 };
 
 class Restaurant{
@@ -77,13 +91,37 @@ class Restaurant{
 
     public:
     Restaurant(){}
-    void startSimulation(){}
+    
     void hireEmployees(){}
+    // Starts simulation of a day
+    void startSimulation();
+    // Sets menu
     void setMenu(){}
+    // Creates 5 new customers with random names and orders
+    // Then, adds them to array
+    void initializeCustomers(){
+
+        for(int i=0; i < 5; i++){
+            srand(time(0));
+            int randomNameIndex = rand() % 50;
+            string newName = randomNames[randomNameIndex];
+
+            // create new customer with random name and order
+            Customer newCustomer(newName, );
+            newCustomer.setName(newName);
+
+
+        }
+    }
     void setName(string inputName){name = inputName;}
     string getName(){return name;}
 
 };
+
+void Restaurant::startSimulation(){
+    cout << "Beginning simulation" << endl;
+
+}
 
 string getStringInput();
 int getIntInput(int lowerBound, int upperBound);

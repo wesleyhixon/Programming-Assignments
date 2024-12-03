@@ -58,7 +58,7 @@ int main(){
         // Building server address
         sockaddr_in serverAddress;
         serverAddress.sin_family = AF_INET;
-        serverAddress.sin_port = htons(8080);
+        serverAddress.sin_port = htons(8000);
 
         // Get IP address for server
         valid = false;
@@ -104,7 +104,14 @@ int main(){
 
         // Outputting message
         cout << "Message from server: " << endl << buffer << endl;
+        cout << "Exiting..." << endl;
 
+        message = "QUIT";
+
+        int messageSent = send(sock, message, sizeof(message), 0);
+        if(messageSent < 0){
+            cerr << "Failed to send exiting message to server." << endl;
+        }
         // Closing connection and exiting
         close(sock);
     }catch(const exception& e){
