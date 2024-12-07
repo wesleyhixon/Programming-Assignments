@@ -38,7 +38,7 @@ T getNumInput(int lowerBound, int upperBound){
 
 
 struct menuItem{
-    double itemCost;
+    double itemPrice;
     string itemName;
     int timeToMake;
 };
@@ -92,24 +92,30 @@ class Restaurant{
     public:
     Restaurant(){}
     
+    // Hires waiters and cooks
     void hireEmployees(){}
+
     // Starts simulation of a day
     void startSimulation();
+
     // Sets menu
-    void setMenu(){}
+    void setMenu();
+
     // Creates 5 new customers with random names and orders
     // Then, adds them to array
     void initializeCustomers(){
-
         for(int i=0; i < 5; i++){
             srand(time(0));
             int randomNameIndex = rand() % 50;
             string newName = randomNames[randomNameIndex];
 
-            // create new customer with random name and order
-            Customer newCustomer(newName, );
-            newCustomer.setName(newName);
+            int randomMenuItemIndex = rand() % menu.size();
+            menuItem randomMenuItem = menu[randomMenuItemIndex];
 
+            // create new customer with random name and order
+            Customer newCustomer(newName, randomMenuItem);
+
+            customers.push_back(newCustomer);
 
         }
     }
@@ -123,30 +129,7 @@ void Restaurant::startSimulation(){
 
 }
 
-string getStringInput();
-int getIntInput(int lowerBound, int upperBound);
-
-int main(){
-
-    Restaurant myRestaurant;
-
-    cout << "Welcome to the Restaurant Simulator!" << endl;
-    cout << "This program will allow you to live out your dreams of owning a restaurant," << endl;
-    cout << "without the hard parts!" << endl;
-
-    cout << endl << "First, choose a name for your restaurant." << endl;
-
-    string restaurantName = getStringInput();
-
-    myRestaurant.setName(restaurantName);
-
-
-    vector<menuItem> menu = createMenu();
-    return 0;
-}
-
-vector<menuItem> createMenu(){
-    vector<menuItem> menu;
+void Restaurant::setMenu(){
     cout << endl << "Now, create 3 - 5 menu items for your menu." << endl;
 
     cout << "How many items would you like to create? Enter a number between 3 and 5: ";
@@ -166,21 +149,46 @@ vector<menuItem> createMenu(){
 
         menuItem newMenuItem;
         newMenuItem.itemName = itemName;
-        newMenuItem.itemCost = itemCost;
+        newMenuItem.itemPrice = itemCost;
         newMenuItem.timeToMake = timeToMake;
 
+        // Adds menu item to menu
         menu.push_back(newMenuItem);
     }
 
     cout << "Here is your new menu:" << endl;
     for(auto itr = menu.begin(); itr != menu.end(); itr++){
         cout << "Item name: " << itr->itemName << endl;
-        cout << "Item cost: " << itr->itemCost << endl;
+        cout << "Item cost: " << itr->itemPrice << endl;
         cout << "Time to make: " << itr->timeToMake << endl;
     }
 
-    return menu;
+    
 }
+
+string getStringInput();
+
+int main(){
+
+    Restaurant myRestaurant;
+
+    cout << "Welcome to the Restaurant Simulator!" << endl;
+    cout << "This program will allow you to live out your dreams of owning a restaurant," << endl;
+    cout << "without the hard parts!" << endl;
+
+    cout << endl << "First, choose a name for your restaurant." << endl;
+
+    string restaurantName = getStringInput();
+    myRestaurant.setName(restaurantName);
+
+    myRestaurant.setMenu();
+    
+    myRestaurant.initializeCustomers();
+
+    return 0;
+}
+
+
 
 string getStringInput(){
     string userInput;
