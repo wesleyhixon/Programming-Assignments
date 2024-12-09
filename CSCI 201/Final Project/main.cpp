@@ -22,11 +22,13 @@ int main(){
 
     // Create menu
     myRestaurant.setMenu();
-    
+
+    myRestaurant.hireEmployees();
+
     // Create vector of customers
     myRestaurant.initializeCustomers();
 
-
+    
 
     return 0;
 }

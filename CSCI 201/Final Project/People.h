@@ -11,16 +11,17 @@ enum Role{
 class Employee{
     private:
     string name;
-    int workingSpeed;    // Speed is int between 1 and 10
+    double workingSpeed;    // Speed is double between 0.5 and 1.5
     double wage = 10;
     bool isWorking = false;
     Role role;
 
     public:
-    Employee(string inputName, int inputSpeed, Role inputRole): name(inputName), workingSpeed(inputSpeed), role(inputRole) {};
+    Employee(string inputName, double inputSpeed, Role inputRole): name(inputName), workingSpeed(inputSpeed), role(inputRole) {};
     void setName(string inputName);
     string getName();
-    bool isFree();
+    bool getBusyStatus();
+    void toggleBusyStatus();
     double getWage();
     double getWorkingSpeed();
 };
@@ -43,8 +44,9 @@ class Customer{
     public:
     Customer(string inputName, menuItem inputOrder);
     void placeOrder();
-    bool orderReceived();
-    bool orderPlaced();
+    bool getOrderPlacedStatus();
+    void receiveOrder();
+    bool getOrderReceivedStatus();
     double getWaitTime();
     void incrementWaitTime();
     void setName(string inputName);

@@ -9,7 +9,7 @@ class Budget{
         double profit;
         double revenue;
         double costs;
-        double initialCapital;
+        double initialCapital = 100;
 
         Budget(double inputCapital);
         Budget();

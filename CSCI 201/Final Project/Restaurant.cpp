@@ -4,6 +4,9 @@
 using namespace std;
 
 
+
+
+
 string getStringInput(){
     string userInput;
     
@@ -109,10 +112,18 @@ string Restaurant::getName(){return name;}
 // Simulates day
 // Day is 8 hours long
 // Simulation happens in 15 minute increments
+// 4 increments per day = 32 units of time
 
 void Restaurant::simulateDay(){
     cout << "Beginning simulation" << endl;
 
+    int timeUnit = 0;
+
+    // Events that can happen:
+    // Customer walks up to counter
+    while(timeUnit < 32){
+
+    }
 }
 
 void Restaurant::setMenu(){
