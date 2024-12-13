@@ -17,7 +17,7 @@ class Employee{
     Role role;
 
     public:
-    Employee(string inputName, double inputSpeed, Role inputRole): name(inputName), workingSpeed(inputSpeed), role(inputRole) {};
+    Employee(string inputName, double inputSpeed, Role inputRole);
     void setName(string inputName);
     string getName();
     bool getBusyStatus();
@@ -27,9 +27,10 @@ class Employee{
 };
 
 struct menuItem{
-    double itemPrice;
     string itemName;
-    int timeToMake;
+    double itemPrice;
+    double ingredientCost;
+    double timeToMake; // Double between 0.5 and 1.5
 };
 
 
@@ -37,18 +38,36 @@ class Customer{
     private:
     string name;
     menuItem order;
-    bool placedOrder;
-    bool receivedOrder;
-    double waitTime;
+    bool placedOrder = false;
+    bool receivedOrder = false;
+    bool isBeingServed = false;
+    int waitTime = 0;
 
     public:
+    // Constructor
     Customer(string inputName, menuItem inputOrder);
+
+    // Name operations
+    void setName(string inputName);
+    string getName();
+
+    // Get menu order
+    menuItem getOrder();
+
+    // Being served flag
+    void setBeingServed();
+    bool getBeingServedStatus();
+
+    // Placing orders
     void placeOrder();
     bool getOrderPlacedStatus();
+
+    // Receiving orders
     void receiveOrder();
     bool getOrderReceivedStatus();
-    double getWaitTime();
+
+    // Wait time logic
+    int getWaitTime();
     void incrementWaitTime();
-    void setName(string inputName);
 };
 

@@ -5,13 +5,20 @@
 using namespace std;
 
 class Budget{
-    public:
+    private:
         double profit;
         double revenue;
+        double employeeWages;
+        double foodCost;
         double costs;
-        double initialCapital = 100;
+        double capital = 750;
 
+    public:
         Budget(double inputCapital);
         Budget();
-        void printBudget();
+        void setEmployeeWages(double inputWages);
+        void addFoodCost(double inputCost);
+        void addRevenue(double inputRevenue);
+        string toString();
+        friend ostream& operator<<(ostream& os, Budget budget);
 };
