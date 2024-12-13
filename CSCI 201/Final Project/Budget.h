@@ -6,12 +6,12 @@ using namespace std;
 
 class Budget{
     private:
-        double profit;
-        double revenue;
-        double employeeWages;
-        double foodCost;
-        double costs;
-        double capital = 750;
+        double profit = 0;
+        double revenue = 0;
+        double employeeWages = 0;
+        double foodCost = 0;
+        double costs = 0;
+        double capital = 500;
 
     public:
         Budget(double inputCapital);

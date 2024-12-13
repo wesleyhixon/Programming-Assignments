@@ -30,7 +30,7 @@ struct menuItem{
     string itemName;
     double itemPrice;
     double ingredientCost;
-    double timeToMake; // Double between 0.5 and 1.5
+    int timeToMake; // Minutes between 10 and 30
 };
 
 

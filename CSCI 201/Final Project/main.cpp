@@ -10,10 +10,9 @@ using namespace std;
 
 
 /*
-For next time:
-Figure out why task completion is taking so long
-Make it pretty
-Implement budget if you have time
+Project Name: Restaurant Simulator
+Author: Wesley Hixon
+Date Last Updated: 12/13/2024
 */
 
 

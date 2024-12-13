@@ -75,7 +75,7 @@ vector<Task> TaskManager::updateQueue(){
 
 vector<Task> TaskManager::getQueue(){return taskQueue;}
 
-// Task constructor, sets duration of task based on task and employee speed
+// Task constructor, assigns employee and sets duration if employee is input
 Task::Task(taskType typeInput, menuItem orderInput, Employee* employeeInput, Customer* customerInput): 
 type(typeInput), 
 order(orderInput),
@@ -85,6 +85,7 @@ assignedCustomer(customerInput)
     if(assignedEmployee == nullptr){
         return;
     }
+    // Assign employee and adjust duration
     else{
         assignEmployee(employeeInput);
     }
@@ -135,22 +136,30 @@ menuItem Task::getOrder(){return order;}
 Employee* Task::getEmployee(){return assignedEmployee;}
 Customer* Task::getCustomer(){return assignedCustomer;}
 
-// Assigns employee and update duration of task
+// Assigns employee and adjusts duration
 void Task::assignEmployee(Employee* inputEmployee){
 
-    // Assign employee and toggle status
     assignedEmployee = inputEmployee;
     assignedEmployee->toggleBusyStatus();
     status = STARTED;
 
+    adjustDuration();
+
+    // Change the customer's status to being served, if not already
+    if(assignedCustomer->getBeingServedStatus() == false){
+        assignedCustomer->setBeingServed();
+    }
+    
+}
+
+void Task::adjustDuration(){
     // Default durations of tasks
     int durationPlaceOrder = 5;
-    int durationMakeOrder = 20;
+    int durationMakeOrder = order.timeToMake;   // Depends on menu item
     int durationDeliverOrder = 10;
 
     // Getting employee speed and cooking speed
     double employeeSpeed = assignedEmployee->getWorkingSpeed();
-    double cookingSpeed = order.timeToMake;
     double adjustedDuration;
 
     // Adjusting duration
@@ -158,19 +167,13 @@ void Task::assignEmployee(Employee* inputEmployee){
         adjustedDuration = durationPlaceOrder * employeeSpeed;
     }
     else if(type == MAKE_ORDER){
-        adjustedDuration = durationMakeOrder * employeeSpeed * cookingSpeed;
+        adjustedDuration = durationMakeOrder * employeeSpeed;
     }
 
     // This will round the duration to nearest multiple of 5
     int roundedDuration = round(adjustedDuration / 5) * 5;
     duration = roundedDuration;
 
-
-    // Change the customer's status to being served, if not already
-    if(assignedCustomer->getBeingServedStatus() == false){
-        assignedCustomer->setBeingServed();
-    }
-    
 }
 
 string Task::toString(){

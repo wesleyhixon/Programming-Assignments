@@ -1,5 +1,6 @@
 #include <iostream>
 #include <iomanip>
+#include <sstream>
 #include "Budget.h"
 
 using namespace std;
@@ -8,13 +9,16 @@ Budget::Budget(double inputCapital): capital(inputCapital) {}
 Budget::Budget() {}
 
 string Budget::toString(){
-    string budgetString;
+    stringstream budgetSS;
 
-    budgetString += "Starting Capital: " + to_string(capital);
-    budgetString += "\nRevenue: " + to_string(revenue);
-    budgetString += "\nCosts: " + to_string(costs);
-    budgetString += "\nProfits: " + to_string(profit);
+    budgetSS << fixed << showpoint << setprecision(2);
+    budgetSS << "Starting Capital: " <<  capital;
+    budgetSS << "\nRevenue: " << revenue;
+    budgetSS << "\nCosts: " << costs;
+    budgetSS << "\nProfits: " << profit;
+    budgetSS << "\nEnding Capital: " << capital + profit;
 
+    string budgetString = budgetSS.str();
     return budgetString;
 }
 

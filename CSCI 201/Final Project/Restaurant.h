@@ -72,8 +72,7 @@ class Restaurant{
     // Sets menu
     void setMenu();
 
-    // Creates 5 new customers with random names and orders
-    // Then, adds them to array
+    // Initializes customers and adds them to vector
     void initializeCustomers();
 
     // Name operations

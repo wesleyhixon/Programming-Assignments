@@ -26,6 +26,8 @@ private:
     menuItem order;
     Employee* assignedEmployee;
     Customer* assignedCustomer = nullptr;
+    void adjustDuration();
+
 public:
     Task(taskType typeInput, menuItem orderInput, Employee* employeeInput = nullptr, Customer* customerInput = nullptr);
     void assignEmployee(Employee* inputEmployee);

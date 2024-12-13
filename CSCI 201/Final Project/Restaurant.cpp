@@ -100,7 +100,7 @@ void Restaurant::hireEmployees(){
 
     // Employees make 10 bucks an hour
     int hourlyWage = 10;
-    double wages = numEmployees * hourlyWage;
+    double wages = (numCooks + numServers) * hourlyWage;
 
     budget.setEmployeeWages(wages);
 
@@ -110,7 +110,7 @@ void Restaurant::hireEmployees(){
 // Creates 15 new customers with random names and orders
 // Then, adds them to vector
 void Restaurant::initializeCustomers(){
-    int numCustomers = 15;
+    int numCustomers = 20;
 
     for(int i = 0; i < numCustomers; i++){
         // Gets a random name
@@ -138,7 +138,7 @@ void Restaurant::printBudget(){
 
 
 // Simulates day
-// Day is 8 hours long
+// Day is 5 hours long
 // Simulation is updated every 5 minutes, time is 1 minute increments
 // Task completion is rounded to nearest 5 minutes
 
@@ -272,7 +272,7 @@ void Restaurant::outputEvents(int time){
         }
     }
 
-    // If no events,
+    // If no events, don't print anything
     bool noEvents = takingOrders.empty() && cookingOrders.empty() && deliveringOrders.empty();
 
     if(noEvents){
@@ -331,8 +331,8 @@ void Restaurant::setMenu(){
         cout << "Enter a price for this item between 5 and 20 dollars: ";
         double itemCost = getNumInput<double>(5, 20);
 
-        cout << "Enter a number between 0.5 and 1.5 which represents how long it takes to make this item: ";
-        double timeToMake = getNumInput<double>(0.5,1.5);
+        cout << "Enter how many minutes (between 10 and 30) it takes to make this item: ";
+        int timeToMake = getNumInput<int>(10,30);
 
         menuItem newMenuItem;
         newMenuItem.itemName = itemName;
@@ -348,12 +348,10 @@ void Restaurant::setMenu(){
     for(auto itr = menu.begin(); itr != menu.end(); itr++){
         int itemNum = distance(menu.begin(), itr) + 1;
 
-        int minutesToMake = round(20 * itr->timeToMake);
-
         cout << itemNum << ". " << itr->itemName << endl;
         cout << "   - Cost: " << itr->itemPrice << endl;
         cout << "   - Ingredient Cost: " << itr->ingredientCost << endl;
-        cout << "   - Time to make: " << minutesToMake << " minutes" << endl;
+        cout << "   - Time to make: " << itr->timeToMake << " minutes" << endl;
     }
 }
 
