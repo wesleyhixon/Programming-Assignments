@@ -1,0 +1,396 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.15.0" xml:lang="en-US">
+  <compounddef id="classlinkedListType" kind="class" language="C++" prot="public">
+    <compoundname>linkedListType</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="classlinkedListType_1a5e3ba631c04af3cef5ab4e129f0c58d1" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int linkedListType::count</definition>
+        <argsstring></argsstring>
+        <name>count</name>
+        <qualifiedname>linkedListType::count</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="main.cpp" line="16" column="13" bodyfile="main.cpp" bodystart="16" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classlinkedListType_1a92dea9c100b5c00d15daeea9203142d1" prot="public" static="no" mutable="no">
+        <type><ref refid="classnodeType" kindref="compound">nodeType</ref>&lt; int &gt; *</type>
+        <definition>nodeType&lt;int&gt;* linkedListType::first</definition>
+        <argsstring></argsstring>
+        <name>first</name>
+        <qualifiedname>linkedListType::first</qualifiedname>
+        <initializer>= nullptr</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="main.cpp" line="17" column="18" bodyfile="main.cpp" bodystart="17" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classlinkedListType_1ace25bda6c28f0092bc140c2cadf6dfbf" prot="public" static="no" mutable="no">
+        <type><ref refid="classnodeType" kindref="compound">nodeType</ref>&lt; int &gt; *</type>
+        <definition>nodeType&lt;int&gt;* linkedListType::last</definition>
+        <argsstring></argsstring>
+        <name>last</name>
+        <qualifiedname>linkedListType::last</qualifiedname>
+        <initializer>= nullptr</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="main.cpp" line="18" column="18" bodyfile="main.cpp" bodystart="18" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classlinkedListType_1aa14683c5f1801ba7d7c187228f932d05" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>const <ref refid="classlinkedListType" kindref="compound">linkedListType</ref> &amp;</type>
+        <definition>const linkedListType &amp; linkedListType::operator=</definition>
+        <argsstring>(const linkedListType &amp;other)</argsstring>
+        <name>operator=</name>
+        <qualifiedname>linkedListType::operator=</qualifiedname>
+        <param>
+          <type>const <ref refid="classlinkedListType" kindref="compound">linkedListType</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="main.cpp" line="20" column="30" bodyfile="main.cpp" bodystart="20" bodyend="38"/>
+      </memberdef>
+      <memberdef kind="function" id="classlinkedListType_1ac7f5132561edb448aba5050c7ad86164" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>linkedListType::linkedListType</definition>
+        <argsstring>()</argsstring>
+        <name>linkedListType</name>
+        <qualifiedname>linkedListType::linkedListType</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="main.cpp" line="40" column="9" bodyfile="main.cpp" bodystart="40" bodyend="42"/>
+      </memberdef>
+      <memberdef kind="function" id="classlinkedListType_1aac7504a44038665ab375ad108a3e3dee" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>linkedListType::linkedListType</definition>
+        <argsstring>(const linkedListType &amp;other)</argsstring>
+        <name>linkedListType</name>
+        <qualifiedname>linkedListType::linkedListType</qualifiedname>
+        <param>
+          <type>const <ref refid="classlinkedListType" kindref="compound">linkedListType</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="main.cpp" line="44" column="9" bodyfile="main.cpp" bodystart="44" bodyend="62"/>
+      </memberdef>
+      <memberdef kind="function" id="classlinkedListType_1a815b1206e282794ae7dd3bc55dee6cf7" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>linkedListType::~linkedListType</definition>
+        <argsstring>()</argsstring>
+        <name>~linkedListType</name>
+        <qualifiedname>linkedListType::~linkedListType</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="main.cpp" line="64" column="9" bodyfile="main.cpp" bodystart="64" bodyend="66"/>
+      </memberdef>
+      <memberdef kind="function" id="classlinkedListType_1ae3cd1ff1999a7e75b1004a11da3066bd" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void linkedListType::initializeList</definition>
+        <argsstring>()</argsstring>
+        <name>initializeList</name>
+        <qualifiedname>linkedListType::initializeList</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="main.cpp" line="68" column="14" bodyfile="main.cpp" bodystart="68" bodyend="76"/>
+      </memberdef>
+      <memberdef kind="function" id="classlinkedListType_1a91e9324e92753bd6ff93b0237c3dc53b" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void linkedListType::insertFirst</definition>
+        <argsstring>(int value)</argsstring>
+        <name>insertFirst</name>
+        <qualifiedname>linkedListType::insertFirst</qualifiedname>
+        <param>
+          <type>int</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="main.cpp" line="77" column="14" bodyfile="main.cpp" bodystart="77" bodyend="90"/>
+      </memberdef>
+      <memberdef kind="function" id="classlinkedListType_1a9d6d149c79d788c3930d483453bdea20" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void linkedListType::insertLast</definition>
+        <argsstring>(int value)</argsstring>
+        <name>insertLast</name>
+        <qualifiedname>linkedListType::insertLast</qualifiedname>
+        <param>
+          <type>int</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="main.cpp" line="91" column="14" bodyfile="main.cpp" bodystart="91" bodyend="104"/>
+      </memberdef>
+      <memberdef kind="function" id="classlinkedListType_1a54ce101aaded94f6f924ea7aa55ae563" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void linkedListType::deleteFirst</definition>
+        <argsstring>()</argsstring>
+        <name>deleteFirst</name>
+        <qualifiedname>linkedListType::deleteFirst</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="main.cpp" line="105" column="14" bodyfile="main.cpp" bodystart="105" bodyend="121"/>
+      </memberdef>
+      <memberdef kind="function" id="classlinkedListType_1a17fee26ff6120c823ae84f8cc985d424" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void linkedListType::deleteLast</definition>
+        <argsstring>()</argsstring>
+        <name>deleteLast</name>
+        <qualifiedname>linkedListType::deleteLast</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="main.cpp" line="122" column="14" bodyfile="main.cpp" bodystart="122" bodyend="144"/>
+      </memberdef>
+      <memberdef kind="function" id="classlinkedListType_1a21fded704be8e2c087700f5c5914db37" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void linkedListType::printList</definition>
+        <argsstring>()</argsstring>
+        <name>printList</name>
+        <qualifiedname>linkedListType::printList</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="main.cpp" line="147" column="14" bodyfile="main.cpp" bodystart="147" bodyend="153"/>
+      </memberdef>
+      <memberdef kind="function" id="classlinkedListType_1a5ab12ce962616888fbde55f72157e13c" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void linkedListType::printList</definition>
+        <argsstring>(nodeType&lt; int &gt; *head)</argsstring>
+        <name>printList</name>
+        <qualifiedname>linkedListType::printList</qualifiedname>
+        <param>
+          <type><ref refid="classnodeType" kindref="compound">nodeType</ref>&lt; int &gt; *</type>
+          <declname>head</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="main.cpp" line="155" column="14" bodyfile="main.cpp" bodystart="155" bodyend="161"/>
+      </memberdef>
+      <memberdef kind="function" id="classlinkedListType_1a168d706423dfdcdc6e729f9ba5d4eb4e" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void linkedListType::selectionSort</definition>
+        <argsstring>()</argsstring>
+        <name>selectionSort</name>
+        <qualifiedname>linkedListType::selectionSort</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="main.cpp" line="164" column="14" bodyfile="main.cpp" bodystart="164" bodyend="176"/>
+      </memberdef>
+      <memberdef kind="function" id="classlinkedListType_1a44bb8b447363d757a98760362ce17532" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classnodeType" kindref="compound">nodeType</ref>&lt; int &gt; *</type>
+        <definition>nodeType&lt; int &gt; * linkedListType::getMiddle</definition>
+        <argsstring>()</argsstring>
+        <name>getMiddle</name>
+        <qualifiedname>linkedListType::getMiddle</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="main.cpp" line="179" column="18" bodyfile="main.cpp" bodystart="179" bodyend="193"/>
+      </memberdef>
+      <memberdef kind="function" id="classlinkedListType_1a34dfde53ea060cde5e34dccc5a9312e1" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classnodeType" kindref="compound">nodeType</ref>&lt; int &gt; *</type>
+        <definition>nodeType&lt; int &gt; * linkedListType::getMiddle</definition>
+        <argsstring>(nodeType&lt; int &gt; *&amp;firstElement)</argsstring>
+        <name>getMiddle</name>
+        <qualifiedname>linkedListType::getMiddle</qualifiedname>
+        <param>
+          <type><ref refid="classnodeType" kindref="compound">nodeType</ref>&lt; int &gt; *&amp;</type>
+          <declname>firstElement</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="main.cpp" line="196" column="18" bodyfile="main.cpp" bodystart="196" bodyend="210"/>
+      </memberdef>
+      <memberdef kind="function" id="classlinkedListType_1a04df78625c170a10dfebf4450f75da2f" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classnodeType" kindref="compound">nodeType</ref>&lt; int &gt; *</type>
+        <definition>nodeType&lt; int &gt; * linkedListType::merge</definition>
+        <argsstring>(nodeType&lt; int &gt; *first1, nodeType&lt; int &gt; *first2)</argsstring>
+        <name>merge</name>
+        <qualifiedname>linkedListType::merge</qualifiedname>
+        <param>
+          <type><ref refid="classnodeType" kindref="compound">nodeType</ref>&lt; int &gt; *</type>
+          <declname>first1</declname>
+        </param>
+        <param>
+          <type><ref refid="classnodeType" kindref="compound">nodeType</ref>&lt; int &gt; *</type>
+          <declname>first2</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="main.cpp" line="213" column="18" bodyfile="main.cpp" bodystart="213" bodyend="259"/>
+      </memberdef>
+      <memberdef kind="function" id="classlinkedListType_1ac46d9a5dd261a3f4ab023fbcb9ac93bb" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void linkedListType::split</definition>
+        <argsstring>(nodeType&lt; int &gt; *first1, nodeType&lt; int &gt; *&amp;first2)</argsstring>
+        <name>split</name>
+        <qualifiedname>linkedListType::split</qualifiedname>
+        <param>
+          <type><ref refid="classnodeType" kindref="compound">nodeType</ref>&lt; int &gt; *</type>
+          <declname>first1</declname>
+        </param>
+        <param>
+          <type><ref refid="classnodeType" kindref="compound">nodeType</ref>&lt; int &gt; *&amp;</type>
+          <declname>first2</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="main.cpp" line="261" column="14" bodyfile="main.cpp" bodystart="261" bodyend="274"/>
+      </memberdef>
+      <memberdef kind="function" id="classlinkedListType_1a10e7f0a3102ced48d11f6b950f33eb5a" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classnodeType" kindref="compound">nodeType</ref>&lt; int &gt; *</type>
+        <definition>nodeType&lt; int &gt; * linkedListType::mergeSort</definition>
+        <argsstring>(nodeType&lt; int &gt; *list)</argsstring>
+        <name>mergeSort</name>
+        <qualifiedname>linkedListType::mergeSort</qualifiedname>
+        <param>
+          <type><ref refid="classnodeType" kindref="compound">nodeType</ref>&lt; int &gt; *</type>
+          <declname>list</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="main.cpp" line="276" column="18" bodyfile="main.cpp" bodystart="276" bodyend="290"/>
+      </memberdef>
+      <memberdef kind="function" id="classlinkedListType_1a77f0642c111fe771e70cb679c4403182" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void linkedListType::mergeSort</definition>
+        <argsstring>()</argsstring>
+        <name>mergeSort</name>
+        <qualifiedname>linkedListType::mergeSort</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="main.cpp" line="292" column="14" bodyfile="main.cpp" bodystart="292" bodyend="306"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>linkedListType</label>
+        <link refid="classlinkedListType"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>first</edgelabel>
+          <edgelabel>last</edgelabel>
+        </childnode>
+      </node>
+      <node id="2">
+        <label>nodeType&lt; int &gt;</label>
+        <link refid="classnodeType"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>link</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="main.cpp" line="14" column="1" bodyfile="main.cpp" bodystart="14" bodyend="308"/>
+    <listofallmembers>
+      <member refid="classlinkedListType_1a5e3ba631c04af3cef5ab4e129f0c58d1" prot="public" virt="non-virtual"><scope>linkedListType</scope><name>count</name></member>
+      <member refid="classlinkedListType_1a54ce101aaded94f6f924ea7aa55ae563" prot="public" virt="non-virtual"><scope>linkedListType</scope><name>deleteFirst</name></member>
+      <member refid="classlinkedListType_1a17fee26ff6120c823ae84f8cc985d424" prot="public" virt="non-virtual"><scope>linkedListType</scope><name>deleteLast</name></member>
+      <member refid="classlinkedListType_1a92dea9c100b5c00d15daeea9203142d1" prot="public" virt="non-virtual"><scope>linkedListType</scope><name>first</name></member>
+      <member refid="classlinkedListType_1a44bb8b447363d757a98760362ce17532" prot="public" virt="non-virtual"><scope>linkedListType</scope><name>getMiddle</name></member>
+      <member refid="classlinkedListType_1a34dfde53ea060cde5e34dccc5a9312e1" prot="public" virt="non-virtual"><scope>linkedListType</scope><name>getMiddle</name></member>
+      <member refid="classlinkedListType_1ae3cd1ff1999a7e75b1004a11da3066bd" prot="public" virt="non-virtual"><scope>linkedListType</scope><name>initializeList</name></member>
+      <member refid="classlinkedListType_1a91e9324e92753bd6ff93b0237c3dc53b" prot="public" virt="non-virtual"><scope>linkedListType</scope><name>insertFirst</name></member>
+      <member refid="classlinkedListType_1a9d6d149c79d788c3930d483453bdea20" prot="public" virt="non-virtual"><scope>linkedListType</scope><name>insertLast</name></member>
+      <member refid="classlinkedListType_1ace25bda6c28f0092bc140c2cadf6dfbf" prot="public" virt="non-virtual"><scope>linkedListType</scope><name>last</name></member>
+      <member refid="classlinkedListType_1ac7f5132561edb448aba5050c7ad86164" prot="public" virt="non-virtual"><scope>linkedListType</scope><name>linkedListType</name></member>
+      <member refid="classlinkedListType_1aac7504a44038665ab375ad108a3e3dee" prot="public" virt="non-virtual"><scope>linkedListType</scope><name>linkedListType</name></member>
+      <member refid="classlinkedListType_1a04df78625c170a10dfebf4450f75da2f" prot="public" virt="non-virtual"><scope>linkedListType</scope><name>merge</name></member>
+      <member refid="classlinkedListType_1a10e7f0a3102ced48d11f6b950f33eb5a" prot="public" virt="non-virtual"><scope>linkedListType</scope><name>mergeSort</name></member>
+      <member refid="classlinkedListType_1a77f0642c111fe771e70cb679c4403182" prot="public" virt="non-virtual"><scope>linkedListType</scope><name>mergeSort</name></member>
+      <member refid="classlinkedListType_1aa14683c5f1801ba7d7c187228f932d05" prot="public" virt="non-virtual"><scope>linkedListType</scope><name>operator=</name></member>
+      <member refid="classlinkedListType_1a21fded704be8e2c087700f5c5914db37" prot="public" virt="non-virtual"><scope>linkedListType</scope><name>printList</name></member>
+      <member refid="classlinkedListType_1a5ab12ce962616888fbde55f72157e13c" prot="public" virt="non-virtual"><scope>linkedListType</scope><name>printList</name></member>
+      <member refid="classlinkedListType_1a168d706423dfdcdc6e729f9ba5d4eb4e" prot="public" virt="non-virtual"><scope>linkedListType</scope><name>selectionSort</name></member>
+      <member refid="classlinkedListType_1ac46d9a5dd261a3f4ab023fbcb9ac93bb" prot="public" virt="non-virtual"><scope>linkedListType</scope><name>split</name></member>
+      <member refid="classlinkedListType_1a815b1206e282794ae7dd3bc55dee6cf7" prot="public" virt="non-virtual"><scope>linkedListType</scope><name>~linkedListType</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

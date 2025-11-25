@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.15.0" xml:lang="en-US">
+  <compounddef id="classnodeType" kind="class" language="C++" prot="public">
+    <compoundname>nodeType</compoundname>
+    <templateparamlist>
+      <param>
+        <type>class Type</type>
+      </param>
+    </templateparamlist>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="classnodeType_1a38dc928659923d19696431e835a6b6b9" prot="public" static="no" mutable="no">
+        <type>Type</type>
+        <definition>Type nodeType&lt; Type &gt;::info</definition>
+        <argsstring></argsstring>
+        <name>info</name>
+        <qualifiedname>nodeType::info</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="main.cpp" line="10" column="14" bodyfile="main.cpp" bodystart="10" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classnodeType_1aab1c09d74f6ca8d4b418627570a4b509" prot="public" static="no" mutable="no">
+        <type><ref refid="classnodeType" kindref="compound">nodeType</ref>&lt; Type &gt; *</type>
+        <definition>nodeType&lt;Type&gt;* nodeType&lt; Type &gt;::link</definition>
+        <argsstring></argsstring>
+        <name>link</name>
+        <qualifiedname>nodeType::link</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="main.cpp" line="11" column="18" bodyfile="main.cpp" bodystart="11" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="main.cpp" line="8" column="1" bodyfile="main.cpp" bodystart="8" bodyend="12"/>
+    <listofallmembers>
+      <member refid="classnodeType_1a38dc928659923d19696431e835a6b6b9" prot="public" virt="non-virtual"><scope>nodeType</scope><name>info</name></member>
+      <member refid="classnodeType_1aab1c09d74f6ca8d4b418627570a4b509" prot="public" virt="non-virtual"><scope>nodeType</scope><name>link</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

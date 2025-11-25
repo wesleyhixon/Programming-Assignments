@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygenindex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="index.xsd" version="1.15.0" xml:lang="en-US">
+  <compound refid="classlinkedListType" kind="class"><name>linkedListType</name>
+    <member refid="classlinkedListType_1a5e3ba631c04af3cef5ab4e129f0c58d1" kind="variable"><name>count</name></member>
+    <member refid="classlinkedListType_1a92dea9c100b5c00d15daeea9203142d1" kind="variable"><name>first</name></member>
+    <member refid="classlinkedListType_1ace25bda6c28f0092bc140c2cadf6dfbf" kind="variable"><name>last</name></member>
+    <member refid="classlinkedListType_1aa14683c5f1801ba7d7c187228f932d05" kind="function"><name>operator=</name></member>
+    <member refid="classlinkedListType_1ac7f5132561edb448aba5050c7ad86164" kind="function"><name>linkedListType</name></member>
+    <member refid="classlinkedListType_1aac7504a44038665ab375ad108a3e3dee" kind="function"><name>linkedListType</name></member>
+    <member refid="classlinkedListType_1a815b1206e282794ae7dd3bc55dee6cf7" kind="function"><name>~linkedListType</name></member>
+    <member refid="classlinkedListType_1ae3cd1ff1999a7e75b1004a11da3066bd" kind="function"><name>initializeList</name></member>
+    <member refid="classlinkedListType_1a91e9324e92753bd6ff93b0237c3dc53b" kind="function"><name>insertFirst</name></member>
+    <member refid="classlinkedListType_1a9d6d149c79d788c3930d483453bdea20" kind="function"><name>insertLast</name></member>
+    <member refid="classlinkedListType_1a54ce101aaded94f6f924ea7aa55ae563" kind="function"><name>deleteFirst</name></member>
+    <member refid="classlinkedListType_1a17fee26ff6120c823ae84f8cc985d424" kind="function"><name>deleteLast</name></member>
+    <member refid="classlinkedListType_1a21fded704be8e2c087700f5c5914db37" kind="function"><name>printList</name></member>
+    <member refid="classlinkedListType_1a5ab12ce962616888fbde55f72157e13c" kind="function"><name>printList</name></member>
+    <member refid="classlinkedListType_1a168d706423dfdcdc6e729f9ba5d4eb4e" kind="function"><name>selectionSort</name></member>
+    <member refid="classlinkedListType_1a44bb8b447363d757a98760362ce17532" kind="function"><name>getMiddle</name></member>
+    <member refid="classlinkedListType_1a34dfde53ea060cde5e34dccc5a9312e1" kind="function"><name>getMiddle</name></member>
+    <member refid="classlinkedListType_1a04df78625c170a10dfebf4450f75da2f" kind="function"><name>merge</name></member>
+    <member refid="classlinkedListType_1ac46d9a5dd261a3f4ab023fbcb9ac93bb" kind="function"><name>split</name></member>
+    <member refid="classlinkedListType_1a10e7f0a3102ced48d11f6b950f33eb5a" kind="function"><name>mergeSort</name></member>
+    <member refid="classlinkedListType_1a77f0642c111fe771e70cb679c4403182" kind="function"><name>mergeSort</name></member>
+  </compound>
+  <compound refid="classnodeType" kind="class"><name>nodeType</name>
+    <member refid="classnodeType_1a38dc928659923d19696431e835a6b6b9" kind="variable"><name>info</name></member>
+    <member refid="classnodeType_1aab1c09d74f6ca8d4b418627570a4b509" kind="variable"><name>link</name></member>
+  </compound>
+  <compound refid="main_8cpp" kind="file"><name>main.cpp</name>
+    <member refid="main_8cpp_1ae66f6b31b5ad750f1fe042a706a4e3d4" kind="function"><name>main</name></member>
+  </compound>
+</doxygenindex>
