@@ -93,11 +93,13 @@ int main(){
     graph.link(A, F);
     graph.link(E, C);
 
+    std::cout << "Breadth first:" << std::endl;
     graph.breadthFirst(A);
 
-    std::cout << std::endl;
-    
+    std::cout << std::endl << "Depth first:" << std::endl;
     graph.depthFirst(A);
+    
+    std::cout << std::endl;
 
     return 0;
 }
