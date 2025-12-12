@@ -300,13 +300,15 @@ class AVLTree{
 int main(){
     AVLTree tree1, tree2;
 
-    std::cout << "First tree insertions: " << std::endl;
-    for(int i = 0; i < 100; i += 10){
-        std::cout << i << ' ';
+    std::cout << "Tree insertions: " << std::endl;
+    for(int i = 0; i < 10; i += 1){
+        int randInt = rand() % 50;
+
+        std::cout << randInt << ' ';
         tree1.insert(i);
     }
 
-    std::cout << "Balance: " << tree1.balance() << std::endl;
+    std::cout << std::endl << "Balance: " << tree1.balance() << std::endl;
 
     std::cout << std::endl;
     return 0;

@@ -1,0 +1,18 @@
+classDiagram
+    class graphType {
+        - vector<vector<bool>> adjMatrix
+        - int nodeCount
+
+        - void removeEdge(vector<vector<bool>>& adj, int A, int B)
+        - void insertEdge(vector<vector<bool>>& adj, int A, int B)
+        - int depthFirstSum(int node, vector<vector<bool>>& adj)
+        - void depthFirstSumRec(int node, vector<vector<bool>>& adj, vector<bool>& visited, int& sum)
+        - void FleuryRec(vector<vector<bool>>& adj, int node)
+        - bool bridge(int A, int B, vector<vector<bool>> adj)
+
+        + graphType(int n)
+        + void printEdges()
+        + void insertEdge(int A, int B)
+        + void removeEdge(int A, int B)
+        + void printFleuryPath()
+    }
