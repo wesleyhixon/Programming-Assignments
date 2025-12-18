@@ -1,0 +1,52 @@
+---
+title: Hint Evaluation
+---
+classDiagram
+
+%% =====================
+%% Types / Enums
+%% =====================
+
+
+
+class guessResult {
+  + string guess
+  + vector<fmt::color> colors
+}
+
+%% =====================
+%% Core classes
+%% =====================
+
+
+
+
+class StateManager {
+  - int maxGuesses
+  - vector<guessResult> guessHistory
+  - string answer
+  - map<char, fmt::color> keyboard
+  - bool displayKeyboard
+  + StateManager()
+  + addGuess(result : guessResult)
+  + numGuesses() int
+  + guessesLeft() int
+  + getHistory() vector<guessResult>
+  + clearHistory()
+}
+
+class HintEvaluator {
+  + generateHint(guess : string, answer : string) guessResult
+  + updateKeyboard(keyboard : map<char, fmt::color>, result : guessResult) map<char, fmt::color>
+}
+
+
+%% =====================
+%% Relationships
+%% =====================
+
+
+
+StateManager "1" o-- "many" guessResult
+HintEvaluator --> guessResult
+

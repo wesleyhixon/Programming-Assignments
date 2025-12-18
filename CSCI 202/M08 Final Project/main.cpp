@@ -28,7 +28,7 @@ todo add stats functionality
 /* 
 Name: Wordle
 Author: Wesley Hixon
-Date Last Updated: 12/17/2025
+Date Last Updated: 12/18/2025
 Purpose: A fun Wordle game you can play in your command line!
 */
 
@@ -172,7 +172,8 @@ class StateManager{
         void clearStatus() { statusMessage = ""; }
         std::string getStatus(){ return statusMessage; }
 
-        void toggleActiveGame(){ activeGame = !activeGame; }
+        void startGame(){ activeGame = true; }
+        void endGame(){ activeGame = false; }
         bool gameIsActive(){ return activeGame; }
         
         bool programIsRunning(){ return programRunning; }
@@ -283,6 +284,7 @@ class Renderer{
             fmt::print(" - play: Begin a game of Wordle\n");
             fmt::print(" - menu: Return to main menu\n");
             fmt::print(" - help: View this menu\n");
+            fmt::print(" - keyboard: Toggle a keyboard with hints highlighted\n");
             fmt::print(" - exit: Exit the game\n");
             fmt::print("\nPress Enter when finished\n");
         }
@@ -355,7 +357,7 @@ class Wordle{
                 // "menu"
                 case MENU:
                     if(stateManager.gameIsActive()){
-                        stateManager.toggleActiveGame();
+                        stateManager.endGame();
                         stateManager.clearStatus();
                     }
                     else{
@@ -371,7 +373,7 @@ class Wordle{
                 // "exit"
                 case EXIT:
                     if(stateManager.gameIsActive()){
-                        stateManager.toggleActiveGame();
+                        stateManager.endGame();
                     }
                     stateManager.toggleRunning();
                     break;
@@ -387,6 +389,7 @@ class Wordle{
                 // "keyboard"
                 case KEYBOARD:
                     stateManager.toggleDisplayKeyboard();
+                    stateManager.setStatus("Keyboard Enabled!");
                     break;
                 default:
                     stateManager.setStatus("Invalid input.");
@@ -403,7 +406,7 @@ class Wordle{
         }
 
         void play(){
-            stateManager.toggleActiveGame();
+            stateManager.startGame();
             stateManager.setAnswer(wordManager.chooseAnswer());
             stateManager.clearHistory();
 
@@ -439,7 +442,7 @@ class Wordle{
 
 
                 if(input.word == stateManager.getAnswer()){
-                    stateManager.toggleActiveGame();
+                    stateManager.endGame();
 
                     stateManager.setStatus("\nYou got it!\nPress Enter to return to main menu.");
                     renderer.displayGameBoard(stateManager.getHistory());
@@ -451,7 +454,7 @@ class Wordle{
                 }
 
                 if(stateManager.guessesLeft() == 0){
-                    stateManager.toggleActiveGame();
+                    stateManager.endGame();
 
                     stateManager.setStatus("\nYou lost. The word was: " + stateManager.getAnswer() + "\nPress Enter to return to main menu.");
                     renderer.displayGameBoard(stateManager.getHistory());

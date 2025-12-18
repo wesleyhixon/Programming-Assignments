@@ -1,0 +1,21 @@
+---
+title: Coloring Hints in Wordle
+---
+
+flowchart TD
+
+    A[Start] --> B[Color all letters gray and count the occurrences of each letter]
+    A ~~~ C
+    B --> C[For position i in guess]
+    subgraph First Pass
+    C --> D["guess[i] == answer[i]?"]
+    D --> |Yes|E[Color this letter green as a hint and subtract one occurrence]
+    end
+
+    subgraph Second Pass
+    C --> |When finished|F["For each position i in guess where color is not green"]
+    F --> G[Do any occurrences of this letter remain?]
+    G --> |Yes|H[Color this letter yellow and subtract one occurrence]
+    end
+    F --> |When finished|I[End]
+    I ~~~ H

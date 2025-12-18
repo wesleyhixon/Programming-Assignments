@@ -1,0 +1,32 @@
+classDiagram
+
+
+
+%% =====================
+%% Core classes
+%% =====================
+
+class Wordle {
+  - WordManager wordManager
+  - StateManager stateManager
+  - InputManager inputManager
+  - HintEvaluator hintEvaluator
+  - Renderer renderer
+  + Wordle()
+  + menu()
+  + play()
+  + handleCommand(command : string)
+}
+
+
+
+%% =====================
+%% Relationships
+%% =====================
+
+Wordle --> WordManager
+Wordle --> StateManager
+Wordle --> InputManager
+Wordle --> HintEvaluator
+Wordle --> Renderer
+

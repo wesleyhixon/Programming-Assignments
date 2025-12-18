@@ -1,0 +1,74 @@
+---
+title: Input Pipeline
+---
+
+classDiagram
+
+%% =====================
+%% Types / Enums
+%% =====================
+
+class commandType {
+  <<enumeration>>
+  PLAY
+  MENU
+  HELP
+  EXIT
+  ANSWER
+  KEYBOARD
+}
+
+class inputType {
+  + string word
+  + bool command
+}
+
+
+%% =====================
+%% Core classes
+%% =====================
+
+class Wordle {
+  - WordManager wordManager
+  - InputManager inputManager
+  + Wordle()
+  + menu()
+  + play()
+  + handleCommand(command : string)
+}
+class WordManager {
+  - vector<string> answers
+  - unordered_set<string> guesses
+  - initializeAnswers(filename : string)
+  - initializeGuesses(filename : string)
+  + WordManager(answersFile : string, guessesFile : string)
+  + isValidGuess(word : string) bool
+  + chooseAnswer() string
+}
+
+
+
+
+
+class InputManager {
+  + getInput() inputType
+}
+
+
+%% =====================
+%% Relationships
+%% =====================
+
+Wordle --> WordManager
+
+Wordle --> InputManager
+
+
+
+InputManager --> inputType
+
+
+%% commandType usage (global mapping + switch)
+Wordle ..> commandType : switches on
+InputManager ..> commandType : recognizes via commandStrings
+```

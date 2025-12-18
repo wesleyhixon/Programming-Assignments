@@ -1,0 +1,21 @@
+---
+title: Use Case Diagram
+---
+
+flowchart LR
+    Player(["Player"])
+
+    Player --> |"start"| SG([Start Game])
+    Player --> |"guess"| EG([Enter Guess])
+    Player --> |"quit"| QG([Quit Game])
+    Player --> |"keyboard"| KB([View Keyboard Hints])
+
+    subgraph Wordle
+        SG
+        QG
+        KB
+        EG --> RF([Receive Feedback])
+
+        RF --> WG([Win Game])
+        RF --> LG([Lose Game])
+    end
