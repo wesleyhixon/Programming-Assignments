@@ -5,20 +5,23 @@
 #include <vector>
 #include <exception>
 #include <algorithm>
+#include <map>
 #include <unordered_map>
 #include <fmt/core.h>
 #include <fmt/base.h>
 #include <fmt/color.h>
-#include <stdlib.h>
+
 
 
 void clrscr();
 
 
 /* 
-todo add a keyboard
+//todo add a keyboard
+    //- Finish adding displayKeyboard
+    //- add keyboard command to handleCommands()
 todo add stats functionality
-todo create a main menu
+//todo create a main menu
 */
 
 
@@ -28,6 +31,21 @@ Author: Wesley Hixon
 Date Last Updated: 12/17/2025
 Purpose: A fun Wordle game you can play in your command line!
 */
+
+enum commandType{
+    PLAY, MENU, HELP, EXIT, ANSWER, KEYBOARD
+};
+
+std::unordered_map<std::string, commandType> commandStrings{
+    {"play", PLAY},
+    {"menu", MENU},
+    {"help", HELP},
+    {"exit", EXIT},
+    {"answer", ANSWER},
+    {"keyboard", KEYBOARD}
+};
+
+
 
 class WordManager{
     private:
@@ -80,7 +98,6 @@ class WordManager{
         }
 
         std::string chooseAnswer(){
-            srand(time(nullptr));
 
             int randIndex = rand() % answers.size();
             return answers[randIndex];
@@ -96,13 +113,26 @@ struct guessResult{
 };
 
 
+
+
+
 class StateManager{
     int maxGuesses = 6;
     std::vector<guessResult> guessHistory;
     std::string answer;
     std::string statusMessage;
+    bool activeGame = false;
+    bool programRunning = true;
+
+    std::map<char, fmt::color> keyboard;
+    bool displayKeyboard = false;
+
 
     public:
+
+        StateManager(){
+            initializeKeyboard();
+        }
         void addGuess(guessResult guess){
             guessHistory.push_back(guess);
         }
@@ -124,14 +154,33 @@ class StateManager{
         void setAnswer(std::string a) { answer = a; }
 
         std::vector<guessResult> getHistory(){ return guessHistory; }
+        void clearHistory(){ guessHistory.clear(); }
 
-        void addStatus(std::string status){ statusMessage = status; }
+        void setKeyboard(std::map<char, fmt::color> k){ keyboard = k; }
+        std::map<char, fmt::color> getKeyboard(){ return keyboard; }
+
+        void initializeKeyboard(){
+            for(char c = 'a'; c <= 'z'; c++){
+                keyboard[c] = fmt::color::white;
+            }
+        }
+
+        bool getDisplayKeyboard(){ return displayKeyboard; }
+        void toggleDisplayKeyboard(){ displayKeyboard = !displayKeyboard; }
+
+        void setStatus(std::string status){ statusMessage = status; }
         void clearStatus() { statusMessage = ""; }
         std::string getStatus(){ return statusMessage; }
+
+        void toggleActiveGame(){ activeGame = !activeGame; }
+        bool gameIsActive(){ return activeGame; }
+        
+        bool programIsRunning(){ return programRunning; }
+        void toggleRunning(){ programRunning = false;}
 };
 
 
-class GuessEvaluator{
+class HintEvaluator{
     public:
         guessResult generateHint(std::string guess, std::string answer){
             std::vector<fmt::color> colors(5, fmt::color::gray);
@@ -168,6 +217,35 @@ class GuessEvaluator{
             
             return guessResult(guess, colors);
         }
+
+        std::map<char, fmt::color> updateKeyboard(std::map<char, fmt::color> keyboard, guessResult result){
+
+            // Add gray letters to keyboard
+            for(int i = 0; i < 5; i++){
+                char c = result.guess[i];
+                if(result.colors[i] == fmt::color::gray){
+                    keyboard[c] = fmt::color::gray;
+                }
+            }
+
+            // Add yellow letters
+            for(int i = 0; i < 5; i++){
+                char c = result.guess[i];
+                if(result.colors[i] == fmt::color::yellow && keyboard[c] != fmt::color::green){
+                    keyboard[c] = fmt::color::yellow;
+                }
+            }
+
+            // Add green letters
+            for(int i = 0; i < 5; i++){
+                char c = result.guess[i];
+                if(result.colors[i] == fmt::color::green){
+                    keyboard[c] = fmt::color::green;
+                }
+            }
+
+            return keyboard;
+        }
 };
 
 struct inputType{
@@ -175,9 +253,11 @@ struct inputType{
     bool command = false;
 };
 
+
+
 class InputManager{
     public:
-        inputType readInput(){
+        inputType getInput(){
             inputType input;
             std::string line;
             
@@ -185,10 +265,8 @@ class InputManager{
 
             std::transform(line.begin(), line.end(), line.begin(), ::tolower);
 
-            if(line == "help" || line == "exit" || line == "answer"){
+            if(commandStrings.find(line) != commandStrings.end()){
                 input.command = true;
-                input.word = line;
-                return input;
             }
             
             input.word = line;
@@ -199,9 +277,32 @@ class InputManager{
 
 class Renderer{
     public:
-        void displayMenu();
-        void displayGameBoard(const std::vector<guessResult> &guessHistory, std::string statusMessage){
+        void displayHelp(){
             clrscr();
+            fmt::print("List of commands:\n");
+            fmt::print(" - play: Begin a game of Wordle\n");
+            fmt::print(" - menu: Return to main menu\n");
+            fmt::print(" - help: View this menu\n");
+            fmt::print(" - exit: Exit the game\n");
+            fmt::print("\nPress Enter when finished\n");
+        }
+        void displayMenu(){
+            clrscr();
+            fmt::print("Welcome to Wordle!\n");
+            fmt::print("Please select a menu option:\n");
+            
+            
+            fmt::print(" - play\n");
+            fmt::print(" - keyboard\n");
+            fmt::print(" - help\n");
+            fmt::print(" - exit\n");
+
+        }
+        void displayGameBoard(const std::vector<guessResult> &guessHistory){
+            clrscr();
+
+            fmt::print("Please guess a five letter word.\n");
+
             for(guessResult guessRecord : guessHistory){
                 for(int i = 0; i < 5; i++){
                     fmt::print(fg(guessRecord.colors[i]), "{}" ,guessRecord.guess[i]);
@@ -209,9 +310,20 @@ class Renderer{
 
                 fmt::print("\n");
             }
+        }
 
+        void displayKeyboard(std::map<char, fmt::color> keyboard){
+            for(char c = 'a'; c <= 'z'; c++){
+                fmt::print(fmt::fg(keyboard[c]),"{} ", c);
+            }
+
+            fmt::print("\n");
+        }
+        void displayStatus(std::string statusMessage){
             fmt::print("{}\n", statusMessage);
         }
+
+
 };
 
 
@@ -220,48 +332,134 @@ class Wordle{
     WordManager wordManager;
     StateManager stateManager;
     InputManager inputManager;
-    GuessEvaluator guessEvaluator;
+    HintEvaluator hintEvaluator;
     Renderer renderer;
 
     public:
 
-        void play(){
-            bool running = true;
+        void handleCommand(std::string command){
+            // Gets index of command
+            commandType commandID = commandStrings[command];
 
-            while(stateManager.guessesLeft() > 0 && running){
+            switch(commandID){
+                // "play"
+                case PLAY:
+                    if(!stateManager.gameIsActive()){
+                        stateManager.clearStatus();
+                        play();
+                    }
+                    else{
+                        stateManager.setStatus("Invalid input.");
+                    }
+                    break;
+                // "menu"
+                case MENU:
+                    if(stateManager.gameIsActive()){
+                        stateManager.toggleActiveGame();
+                        stateManager.clearStatus();
+                    }
+                    else{
+                        stateManager.setStatus("Invalid input.");
+                    }
+                    break;
+                // "help"
+                case HELP:
+                    stateManager.clearStatus();
+                    renderer.displayHelp();
+                    inputManager.getInput();
+                    break;
+                // "exit"
+                case EXIT:
+                    if(stateManager.gameIsActive()){
+                        stateManager.toggleActiveGame();
+                    }
+                    stateManager.toggleRunning();
+                    break;
+                // "answer"
+                case ANSWER:
+                    if(stateManager.gameIsActive()){
+                        stateManager.setStatus(stateManager.getAnswer());
+                    }
+                    else{
+                        stateManager.setStatus("Invalid input.");
+                    }
+                    break;
+                // "keyboard"
+                case KEYBOARD:
+                    stateManager.toggleDisplayKeyboard();
+                    break;
+                default:
+                    stateManager.setStatus("Invalid input.");
+            }
+        }
+
+        void menu(){
+            while(stateManager.programIsRunning()){
+                renderer.displayMenu();
+                inputType input = inputManager.getInput();
+
+                handleCommand(input.word);
+            }
+        }
+
+        void play(){
+            stateManager.toggleActiveGame();
+            stateManager.setAnswer(wordManager.chooseAnswer());
+            stateManager.clearHistory();
+
+            stateManager.initializeKeyboard();
+
+            while(stateManager.gameIsActive()){
+
+                renderer.displayGameBoard(stateManager.getHistory());
+                if(stateManager.getDisplayKeyboard()){
+                    renderer.displayKeyboard(stateManager.getKeyboard());
+                }
+
+                renderer.displayStatus(stateManager.getStatus());
+
                 inputType input;
 
-                input = inputManager.readInput();
-
-                if(input.command){
-                    stateManager.clearStatus();
-                    if(input.word == "exit"){
-                        running = false;
-                    }
-                    if(input.word == "answer"){
-                        fmt::print("{}\n", stateManager.getAnswer());
-                    }
-                    continue;
-                }
+                input = inputManager.getInput();
                 
 
                 if(wordManager.isValidGuess(input.word)){
                     stateManager.clearStatus();
-                    guessResult result = guessEvaluator.generateHint(input.word, stateManager.getAnswer());
+                    guessResult result = hintEvaluator.generateHint(input.word, stateManager.getAnswer());
 
                     stateManager.addGuess(result);
-                    
+                    stateManager.setKeyboard(hintEvaluator.updateKeyboard(stateManager.getKeyboard(), result));
+                }
+                else if(input.command){
+                    handleCommand(input.word);
                 }
                 else{
-                    stateManager.addStatus("Invalid word. Enter help to see commands.");
+                    stateManager.setStatus("Invalid word. Enter help to see commands.");
                 }
 
 
-                renderer.displayGameBoard(stateManager.getHistory(), stateManager.getStatus());
-
                 if(input.word == stateManager.getAnswer()){
-                    running = false;
-                    fmt::print("\nYou got it!\n");
+                    stateManager.toggleActiveGame();
+
+                    stateManager.setStatus("\nYou got it!\nPress Enter to return to main menu.");
+                    renderer.displayGameBoard(stateManager.getHistory());
+                    renderer.displayStatus(stateManager.getStatus());
+
+                    inputManager.getInput();
+
+                    stateManager.clearStatus();
+                }
+
+                if(stateManager.guessesLeft() == 0){
+                    stateManager.toggleActiveGame();
+
+                    stateManager.setStatus("\nYou lost. The word was: " + stateManager.getAnswer() + "\nPress Enter to return to main menu.");
+                    renderer.displayGameBoard(stateManager.getHistory());
+                    renderer.displayStatus(stateManager.getStatus());
+
+                    inputManager.getInput();
+
+                    stateManager.clearStatus();
                 }
             }
         }
@@ -274,10 +472,17 @@ class Wordle{
 
 int main(){
 
+    srand(time(nullptr));
+
     Wordle wordle;
 
-    wordle.play();
-
+    try{
+        wordle.menu();
+    }
+    catch(const std::exception &e){
+        fmt::print(e.what());
+        return -1;
+    }
     
     return 0;
 }

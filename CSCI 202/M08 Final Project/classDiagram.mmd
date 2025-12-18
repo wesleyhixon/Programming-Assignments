@@ -1,23 +1,119 @@
 classDiagram
-    Animal <|-- Duck
-    Animal <|-- Fish
-    Animal <|-- Zebra
-    Animal : +int age
-    Animal : +String gender
-    Animal: +isMammal()
-    Animal: +mate()
-    class Duck{
-      +String beakColor
-      +swim()
-      +quack()
-    }
-    class Fish{
-      -int sizeInFeet
-      -canEat()
-    }
-    class Zebra{
-      +bool is_wild
-      +run()
-    }
 
-    
+%% =====================
+%% Types / Enums
+%% =====================
+
+class commandType {
+  <<enumeration>>
+  PLAY
+  MENU
+  HELP
+  EXIT
+  ANSWER
+  KEYBOARD
+}
+
+class inputType {
+  + string word
+  + bool command
+}
+
+class guessResult {
+  + string guess
+  + vector<fmt::color> colors
+}
+
+%% =====================
+%% Core classes
+%% =====================
+
+class Wordle {
+  - WordManager wordManager
+  - StateManager stateManager
+  - InputManager inputManager
+  - HintEvaluator hintEvaluator
+  - Renderer renderer
+  + Wordle()
+  + menu()
+  + play()
+  + handleCommand(command : string)
+}
+
+class WordManager {
+  - vector<string> answers
+  - unordered_set<string> guesses
+  - initializeAnswers(filename : string)
+  - initializeGuesses(filename : string)
+  + WordManager(answersFile : string, guessesFile : string)
+  + isValidGuess(word : string) bool
+  + chooseAnswer() string
+}
+
+class StateManager {
+  - int maxGuesses
+  - vector<guessResult> guessHistory
+  - string answer
+  - string statusMessage
+  - bool activeGame
+  - bool programRunning
+  - map<char, fmt::color> keyboard
+  - bool displayKeyboard
+  + StateManager()
+  + addGuess(result : guessResult)
+  + numGuesses() int
+  + guessesLeft() int
+  + getAnswer() string
+  + setAnswer(a : string)
+  + getHistory() vector<guessResult>
+  + clearHistory()
+  + initializeKeyboard()
+  + getKeyboard() map<char, fmt::color>
+  + setKeyboard(k : map<char, fmt::color>)
+  + toggleDisplayKeyboard()
+  + getDisplayKeyboard() bool
+  + setStatus(status : string)
+  + clearStatus()
+  + getStatus() string
+  + toggleActiveGame()
+  + gameIsActive() bool
+  + programIsRunning() bool
+  + toggleRunning()
+}
+
+class HintEvaluator {
+  + generateHint(guess : string, answer : string) guessResult
+  + updateKeyboard(keyboard : map<char, fmt::color>, result : guessResult) map<char, fmt::color>
+}
+
+class InputManager {
+  + getInput() inputType
+}
+
+class Renderer {
+  + displayMenu()
+  + displayHelp()
+  + displayGameBoard(history : vector<guessResult>)
+  + displayKeyboard(keyboard : map<char, fmt::color>)
+  + displayStatus(status : string)
+}
+
+%% =====================
+%% Relationships
+%% =====================
+
+Wordle --> WordManager
+Wordle --> StateManager
+Wordle --> InputManager
+Wordle --> HintEvaluator
+Wordle --> Renderer
+
+StateManager "1" o-- "many" guessResult
+InputManager --> inputType
+HintEvaluator --> guessResult
+Renderer --> guessResult
+
+%% commandType usage (global mapping + switch)
+Wordle ..> commandType : switches on
+InputManager ..> commandType : recognizes via commandStrings
+```
